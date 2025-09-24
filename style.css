@@ -1,0 +1,168 @@
+/* General Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #0f4c3a 0%, #1a7a5d 50%, #0f4c3a 100%); /* Gradient background */
+    color: #e0f2f1; /* Light text color */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top, adjust if you want it centered vertically */
+    min-height: 100vh;
+    padding: 20px; /* Padding around the content */
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header Styling */
+header {
+    margin-bottom: 30px;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    background-color: #27c28c; /* Green circle color */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo svg {
+    fill: white; /* Color for the SVG icon */
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #66e0af; /* Lighter green for title */
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+header p {
+    font-size: 1.1em;
+    color: #a7d9c6; /* Slightly darker light green for description */
+    line-height: 1.5;
+}
+
+/* Form Card Styling */
+.form-card {
+    background-color: rgba(255, 255, 255, 0.08); /* Translucent background */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border-radius: 15px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.form-card h2 {
+    font-size: 1.6em;
+    color: #e0f2f1;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.icon-cube {
+    color: #27c28c; /* Green color for the cube icon */
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: #e0f2f1;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="tel"],
+textarea {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 12px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly darker translucent input */
+    color: #e0f2f1;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="tel"]::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #66e0af;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 224, 175, 0.3);
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px; /* Minimum height for textarea */
+}
+
+/* Submit Button Styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #27c28c; /* Green button color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+    background-color: #1e9a70; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+    header p {
+        font-size: 1em;
+    }
+    .form-card {
+        padding: 20px;
+    }
+    .form-card h2 {
+        font-size: 1.4em;
+    }
+}

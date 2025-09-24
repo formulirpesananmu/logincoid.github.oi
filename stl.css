@@ -1,0 +1,7 @@
+.product-section { margin-bottom: 20px; }
+.product-group { display: flex; align-items: center; margin-bottom: 10px; }
+.checkbox-label { display: flex; align-items: center; cursor: pointer; }
+.checkmark { width: 20px; height: 20px; border: 1px solid #ccc; margin-right: 10px; }
+.quantity-input { margin-left: auto; display: flex; align-items: center; }
+.quantity-input label { margin-right: 5px; }
+.quantity-input input { width: 60px; }
