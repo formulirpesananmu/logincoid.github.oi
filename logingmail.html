@@ -1,0 +1,141 @@
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col">
+  <div class="flex justify-center mt-20">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+      alt="Google logo with blue G, red o, yellow o, blue g, green l, and red e"
+      class="w-28 h-auto"
+    />
+  </div>
+
+  <!-- Enter Email or Phone Page -->
+  <div id="enter-identifier" class="flex flex-col flex-grow">
+    <h1 class="text-center text-3xl font-normal mt-6 text-black">Login</h1>
+    <p class="text-center text-base text-black mt-4 max-w-md mx-auto px-4 leading-relaxed">
+      Gunakan Akun Google Anda. Akun akan ditambahkan ke perangkat ini dan tersedia untuk aplikasi Google lainnya.
+    </p>
+
+    <form id="identifier-form" class="max-w-md mx-auto px-4 mt-8 w-full" onsubmit="return false;">
+      <input
+        type="text"
+        id="identifier-input"
+        placeholder="Email atau nomor telepon"
+        class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-600"
+        autocomplete="username"
+        required
+      />
+      <div class="mt-2">
+        <button
+          type="button"
+          id="forgot-email-btn"
+          class="text-blue-600 text-sm underline hover:no-underline focus:outline-none"
+        >
+          Lupa email?
+        </button>
+      </div>
+    </form>
+
+    <div class="flex justify-end max-w-md mx-auto px-4 mt-auto mb-8 w-full">
+      <button
+        type="button"
+        id="next-to-password-btn"
+        class="bg-blue-600 text-white text-base font-normal rounded px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700"
+      >
+        Selanjutnya
+      </button>
+    </div>
+  </div>
+
+  <!-- Enter Password Page -->
+  <div id="enter-password" class="hidden flex flex-col flex-grow">
+    <h1 class="text-center text-3xl font-normal mt-20 text-black">Masukkan Kata Sandi</h1>
+    <p class="text-center text-base text-black mt-4 max-w-md mx-auto px-4 leading-relaxed">
+      Masukkan kata sandi untuk akun Anda.
+    </p>
+
+    <form id="password-form" class="max-w-md mx-auto px-4 mt-8 w-full" onsubmit="return false;">
+      <input
+        type="password"
+        id="password-input"
+        placeholder="Kata sandi"
+        class="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-600"
+        autocomplete="current-password"
+        required
+      />
+    </form>
+
+    <div class="flex justify-end max-w-md mx-auto px-4 mt-auto mb-8 w-full">
+      <button
+        type="button"
+        id="login-btn"
+        class="bg-blue-600 text-white text-base font-normal rounded px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-700"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const enterIdentifier = document.getElementById('enter-identifier');
+    const enterPassword = document.getElementById('enter-password');
+
+    const nextToPasswordBtn = document.getElementById('next-to-password-btn');
+    const loginBtn = document.getElementById('login-btn');
+    const forgotEmailBtn = document.getElementById('forgot-email-btn');
+
+    const identifierInput = document.getElementById('identifier-input');
+    const passwordInput = document.getElementById('password-input');
+
+    // On clicking "Selanjutnya" after entering email/phone
+    nextToPasswordBtn.addEventListener('click', () => {
+      const identifier = identifierInput.value.trim();
+      if (identifier === '') {
+        alert('Mohon masukkan email atau nomor telepon.');
+        identifierInput.focus();
+        return;
+      }
+      enterIdentifier.classList.add('hidden');
+      enterPassword.classList.remove('hidden');
+      passwordInput.value = '';
+      passwordInput.focus();
+    });
+
+    // On clicking "Login" after entering password
+    loginBtn.addEventListener('click', () => {
+      const password = passwordInput.value.trim();
+      if (password === '') {
+        alert('Mohon masukkan kata sandi.');
+        passwordInput.focus();
+        return;
+      }
+      alert('Login berhasil. Silakan Kembali Ke aplikasi.');
+      // Optionally reset inputs and go back to identifier page
+      identifierInput.value = '';
+      passwordInput.value = '';
+      enterPassword.classList.add('hidden');
+      enterIdentifier.classList.remove('hidden');
+      identifierInput.focus();
+    });
+
+    // "Lupa email?" button just alerts for demo (no further action)
+    forgotEmailBtn.addEventListener('click', () => {
+      alert('Fitur lupa email belum tersedia di halaman ini.');
+    });
+  </script>
+</body>
+</html>
