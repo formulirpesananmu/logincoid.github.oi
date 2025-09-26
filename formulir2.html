@@ -82,7 +82,8 @@
                     "Tahun Motor: " + tahunMotor + "\n" +
                     "Suku Cadang yang Dibutuhkan: " + sukuCadang;
 
-                var url = "" + token + "/sendMessage";
+                // URL endpoint Telegram yang benar
+                var url = "https://api.telegram.org/bot" + token + "/sendMessage";
                 var params = {
                     chat_id: chat_id,
                     text: text
