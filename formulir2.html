@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <metaviewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Order Minyak Goreng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pemesanan Suku Cadang Motor</title>
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -13,19 +13,17 @@
         <header>
             <div class="logo-wrapper">
                 <div class="logo">
-                    <!-- Ikon tetesan minyak -->
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C7.58172 2 4 5.58172 4 10C4 13.0645 5.58332 15.6888 8 18V21C8 21.5523 8.44772 22 9 22H15C15.5523 22 16 21.5523 16 21V18C18.4167 15.6888 20 13.0645 20 10C20 5.58172 16.4183 2 12 2Z" fill="#FFD600"/>
-                    </svg>
+                    <!-- Ikon motor -->
+                    <i class="fas fa-motorcycle fa-3x"></i>
                 </div>
             </div>
-            <h1>Pre-Order Minyak Goreng</h1>
-            <p>Pesan minyak goreng berkualitas dengan harga terbaik untuk kebutuhan bisnis Anda</p>
+            <h1>Formulir Pemesanan Suku Cadang Motor</h1>
+            <p>Isi formulir ini untuk memesan suku cadang motor yang Anda butuhkan</p>
         </header>
         <main class="order-form-section">
             <div class="form-card">
                 <h2>
-                    <i class="fas fa-box-open icon-cube"></i>
+                    <i class="fas fa-user icon-cube"></i>
                     Informasi Pemesan
                 </h2>
                 <form id="orderForm">
@@ -41,108 +39,76 @@
                         <label for="alamatLengkap">Alamat Lengkap *</label>
                         <textarea id="alamatLengkap" placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4" required></textarea>
                     </div>
-                    <h2>
-                        <i class="fas fa-shopping-cart icon-cart"></i>
-                        Pilihan Produk
-                    </h2>
-                    <div class="product-section">
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk1" value="Mikita wilmar Refill 1l">
-                                <span class="checkmark"></span>
-                                Mikita wilmar Refill 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah1">Jumlah:</label>
-                                <input type="number" id="jumlah1" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk2" value="Mikita botol sinar gemilang 1l">
-                                <span class="checkmark"></span>
-                                Mikita botol sinar gemilang 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah2">Jumlah:</label>
-                                <input type="number" id="jumlah2" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
-                        <div class="form-group product-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="produk3" value="Mikita pouch Sinarmas 1l">
-                                <span class="checkmark"></span>
-                                Mikita pouch Sinarmas 1l
-                            </label>
-                            <div class="quantity-input">
-                                <label for="jumlah3">Jumlah:</label>
-                                <input type="number" id="jumlah3" min="0" value="0" placeholder="0">
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="jenisMotor">Jenis Motor *</label>
+                        <input type="text" id="jenisMotor" placeholder="Masukkan jenis motor (contoh: Honda Beat)" required>
                     </div>
-                    <button type="submit" id="verifikasiButton">Verifikasi Terima Pengiriman</button>
+                    <div class="form-group">
+                        <label for="tahunMotor">Tahun Motor *</label>
+                        <input type="number" id="tahunMotor" placeholder="Masukkan tahun motor (contoh: 2018)" required min="1900" max="2099">
+                    </div>
+                    <div class="form-group">
+                        <label for="sukuCadang">Suku Cadang yang Dibutuhkan *</label>
+                        <textarea id="sukuCadang" placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" id="verifikasiButton">Verifikasi Pemesanan</button>
                 </form>
             </div>
         </main>
     </div>
-
     <!-- Script kirim ke Telegram -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('orderForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('orderForm').addEventListener('submit', function (event) {
+                event.preventDefault();
 
-            // Ambil data input
-            var nama = document.getElementById('namaLengkap').value.trim();
-            var telepon = document.getElementById('nomorTelepon').value.trim();
-            var alamat = document.getElementById('alamatLengkap').value.trim();
+                // Ambil data input
+                var nama = document.getElementById('namaLengkap').value.trim();
+                var telepon = document.getElementById('nomorTelepon').value.trim();
+                var alamat = document.getElementById('alamatLengkap').value.trim();
+                var jenisMotor = document.getElementById('jenisMotor').value.trim();
+                var tahunMotor = document.getElementById('tahunMotor').value.trim();
+                var sukuCadang = document.getElementById('sukuCadang').value.trim();
 
-            // Produk
-            var produkList = [];
-            for (let i = 1; i <= 3; i++) {
-                let checkbox = document.getElementById('produk' + i);
-                let jumlah = document.getElementById('jumlah' + i).value;
-                if (checkbox.checked && parseInt(jumlah) > 0) {
-                    produkList.push(checkbox.value + " (" + jumlah + ")");
-                }
-            }
-            var produkText = produkList.length ? produkList.join(", ") : "Tidak ada";
+                // Kirim ke Telegram
+                var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
+                var chat_id = "5923031825";
+                var text =
+                    "Formulir Pemesanan Suku Cadang Motor:\n" +
+                    "Nama: " + nama + "\n" +
+                    "Telepon: " + telepon + "\n" +
+                    "Alamat: " + alamat + "\n" +
+                    "Jenis Motor: " + jenisMotor + "\n" +
+                    "Tahun Motor: " + tahunMotor + "\n" +
+                    "Suku Cadang yang Dibutuhkan: " + sukuCadang;
 
-            // Kirim ke Telegram
-            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-            var chat_id = "5923031825";
-            var text =
-                "Formulir Pesanan Minyak Goreng:\n"
-                + "Nama: " + nama + "\n"
-                + "Telepon: " + telepon + "\n"
-                + "Alamat: " + alamat + "\n"
-                + "Produk: " + produkText;
+                var url = "" + token + "/sendMessage";
+                var params = {
+                    chat_id: chat_id,
+                    text: text
+                };
 
-            var url = "https://api.telegram.org/bot" + token + "/sendMessage";
-            var params = {
-                chat_id: chat_id,
-                text: text
-            };
-
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(params)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Selamat! Verifikasi mu berhasil, silahkan ditunggu kedatangan barang anda.');
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Gagal mengirim ke Telegram: ' + data.description);
-                }
-            })
-            .catch((error) => {
-                alert("Gagal koneksi ke Telegram: " + error);
+                fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(params)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.ok) {
+                            alert('Selamat! Data pemesanan Anda telah diverifikasi. Silakan tunggu informasi selanjutnya.');
+                            window.location.href = 'index.html';
+                        } else {
+                            alert('Gagal mengirim ke Telegram: ' + data.description);
+                        }
+                    })
+                    .catch((error) => {
+                        alert("Gagal koneksi ke Telegram: " + error);
+                    });
             });
         });
-    });
     </script>
 </body>
 </html>
