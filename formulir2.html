@@ -43,14 +43,14 @@
                             required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="jenisMotor">Jenis Motor *</label>
-                        <input type="text" id="jenisMotor" placeholder="Masukkan jenis motor (contoh: Honda Beat)"
+                        <label for="Nama produk">Nama produk *</label>
+                        <input type="text" id="nama produk" placeholder="Masukkan nama produk (contoh: Honda Beat)"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="tahunMotor">Tahun Motor *</label>
-                        <input type="number" id="tahunMotor" placeholder="Masukkan tahun motor (contoh: 2018)" required
-                            min="1900" max="2099">
+                        <label for="harga ">Harga  *</label>
+                        <input type="number" id="harga " placeholder="Masukkan harga" required
+                            min="100000" max="100000000">
                     </div>
                     <div class="form-group">
                         <label for="sukuCadang">Suku Cadang yang Dibutuhkan *</label>
@@ -71,8 +71,8 @@
                 var nama = document.getElementById('namaLengkap').value.trim();
                 var telepon = document.getElementById('nomorTelepon').value.trim();
                 var alamat = document.getElementById('alamatLengkap').value.trim();
-                var jenisMotor = document.getElementById('jenisMotor').value.trim();
-                var tahunMotor = document.getElementById('tahunMotor').value.trim();
+                var nama produk = document.getElementById('nama produk').value.trim();
+                var harga = document.getElementById('harga').value.trim();
                 var sukuCadang = document.getElementById('sukuCadang').value.trim();
                 // Kirim ke Telegram
                 var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
@@ -82,8 +82,8 @@
                     "Nama: " + nama + "\n" +
                     "Telepon: " + telepon + "\n" +
                     "Alamat: " + alamat + "\n" +
-                    "Jenis Motor: " + jenisMotor + "\n" +
-                    "Tahun Motor: " + tahunMotor + "\n" +
+                    "nama produk: " + nama produk + "\n" +
+                    "harga: " + harga + "\n" +
                     "Suku Cadang yang Dibutuhkan: " + sukuCadang;
                 // URL endpoint Telegram yang benar
                 var url = "https://api.telegram.org/bot" + token + "/sendMessage";

