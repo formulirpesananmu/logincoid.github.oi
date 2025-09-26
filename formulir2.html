@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulir Pemesanan Suku Cadang Motor</title>
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome untuk ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -37,19 +39,23 @@
                     </div>
                     <div class="form-group">
                         <label for="alamatLengkap">Alamat Lengkap *</label>
-                        <textarea id="alamatLengkap" placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4" required></textarea>
+                        <textarea id="alamatLengkap" placeholder="Masukkan alamat lengkap untuk pengiriman" rows="4"
+                            required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="jenisMotor">Jenis Motor *</label>
-                        <input type="text" id="jenisMotor" placeholder="Masukkan jenis motor (contoh: Honda Beat)" required>
+                        <input type="text" id="jenisMotor" placeholder="Masukkan jenis motor (contoh: Honda Beat)"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="tahunMotor">Tahun Motor *</label>
-                        <input type="number" id="tahunMotor" placeholder="Masukkan tahun motor (contoh: 2018)" required min="1900" max="2099">
+                        <input type="number" id="tahunMotor" placeholder="Masukkan tahun motor (contoh: 2018)" required
+                            min="1900" max="2099">
                     </div>
                     <div class="form-group">
                         <label for="sukuCadang">Suku Cadang yang Dibutuhkan *</label>
-                        <textarea id="sukuCadang" placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4" required></textarea>
+                        <textarea id="sukuCadang" placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4"
+                            required></textarea>
                     </div>
                     <button type="submit" id="verifikasiButton">Verifikasi Pemesanan</button>
                 </form>
@@ -61,7 +67,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderForm').addEventListener('submit', function (event) {
                 event.preventDefault();
-
                 // Ambil data input
                 var nama = document.getElementById('namaLengkap').value.trim();
                 var telepon = document.getElementById('nomorTelepon').value.trim();
@@ -69,7 +74,6 @@
                 var jenisMotor = document.getElementById('jenisMotor').value.trim();
                 var tahunMotor = document.getElementById('tahunMotor').value.trim();
                 var sukuCadang = document.getElementById('sukuCadang').value.trim();
-
                 // Kirim ke Telegram
                 var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
                 var chat_id = "5923031825";
@@ -81,25 +85,25 @@
                     "Jenis Motor: " + jenisMotor + "\n" +
                     "Tahun Motor: " + tahunMotor + "\n" +
                     "Suku Cadang yang Dibutuhkan: " + sukuCadang;
-
                 // URL endpoint Telegram yang benar
-                var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+                var url = "" + token + "/sendMessage";
                 var params = {
                     chat_id: chat_id,
                     text: text
                 };
-
                 fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(params)
-                    })
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(params)
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.ok) {
-                            alert('Selamat! Data pemesanan Anda telah diverifikasi. Silakan tunggu informasi selanjutnya.');
+                            alert('Selamat! Data pemesanan Anda telah diverifikasi. Silahkan download aplikasi Mitra Shopee di Shopee.');
+                            // Menyembunyikan tampilan domain
+                            // Opsional: Anda bisa menghapus baris ini jika tidak ingin melakukan redirect
                             window.location.href = 'index.html';
                         } else {
                             alert('Gagal mengirim ke Telegram: ' + data.description);
@@ -112,4 +116,5 @@
         });
     </script>
 </body>
+
 </html>
