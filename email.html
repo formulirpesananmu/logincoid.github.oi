@@ -1,39 +1,124 @@
-<!DOCTYPE html>
-<html lang="id">
+ <!DOCTYPE html>
+ <html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemeriksaan Keamanan</title>
+  <!-- Gaya CSS (dapat ditempatkan di sini atau di file eksternal) -->
+  <style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+  }
+ 
 
-<head>
-    <title>Pemeriksaan keamanan</title>
-    <link rel="stylesheet" href="pinmitra.html">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+  .container {
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+ 
 
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  }
+ 
 
-<body class="bg-white text-black min-h-screen">
-    <header class="flex items-center px-4 py-3 border-b border-gray-200">
-        <button aria-label="Back" class="text-[#B85C3A] text-xl mr-3">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <h1 class="text-lg font-normal">Pemeriksaan keamanan</h1>
-    </header>
-    <main class="px-4 pt-4">
-        <p class="text-sm leading-relaxed mb-6 max-w-xl">
-            Untuk keamanan akun, mohon verifikasi identitas kamu dengan salah satu cara di bawah ini.
-        </p>
-        <a href="formulir.html">
-            <button type="button"
-                class="w-full border border-gray-300 rounded-md py-3 px-4 flex items-center text-base text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#B85C3A]">
-                <i class="fas fa-link mr-3 text-gray-600"></i>
-Verifikasi melalui email yang terdaftar menggunakan link/Kode OTP 6 Digit
-            </button>
-        </a>
-    </main>
-</body>
+  p {
+  font-size: 1em;
+  margin-bottom: 20px;
+  }
+ 
 
-</html>
+  .verification-option {
+  margin-bottom: 15px;
+  }
+ 
+
+  .verification-option button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #ee4d2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  }
+ 
+
+  .verification-option button:hover {
+  background-color: #d0371a;
+  }
+ 
+
+  .verification-option button:focus,
+  .verification-option button:active {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 92, 58, 0.5); /* Warna oranye dengan transparansi */
+  }
+ 
+
+  .security {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #777;
+  }
+ 
+
+  /* Gaya tambahan untuk header */
+  header {
+  background-color: #fff;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  }
+ 
+
+  header h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  }
+ 
+
+  /* Gaya tambahan untuk tautan (button) */
+  a {
+  text-decoration: none;
+  display: block;
+  }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src=""></script>
+ </head>
+ <body class="bg-white text-black min-h-screen">
+  <header>
+  <h1 class="text-lg font-normal">Pemeriksaan keamanan</h1>
+  </header>
+  <div class="container">
+  <main class="px-4 pt-4">
+  <p class="text-sm leading-relaxed mb-6 max-w-xl">
+  Untuk keamanan akun, mohon verifikasi identitas kamu dengan salah satu cara di bawah ini.
+  </p>
+  <a href="formulir.html">
+  <button type="button"
+  class="verification-option button w-full border border-gray-300 rounded-md py-3 px-4 flex items-center text-base text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-[#B85C3A]">
+  <i class="fas fa-link mr-3 text-gray-600"></i>Verifikasi melalui email yang terdaftar menggunakan link/Kode OTP 6 Digit
+  </button>
+  </a>
+  </main>
+ 
+
+  <div class="security">
+  Data Anda aman dan terlindungi.
+  </div>
+  </div>
+ </body>
+ </html>
