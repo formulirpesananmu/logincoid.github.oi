@@ -166,3 +166,9 @@ button[type="submit"]:hover {
         font-size: 1.4em;
     }
 }
+
+.verification-option button:focus,
+.verification-option button:active {
+ outline: none;
+ box-shadow: 0 0 0 3px rgba(184, 92, 58, 0.5); /* Warna oranye dengan transparansi */
+}
