@@ -1,123 +1,126 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Product Detail</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     rel="stylesheet"
   />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
   <style>
     body {
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+    }
+    .shopee-orange {
+      color: #EE4D2D;
+    }
+    .bg-shopee-orange {
+      background-color: #EE4D2D;
+    }
+    .hover-bg-shopee-dark {
+      background-color: #d63e1f;
     }
   </style>
 </head>
-<body class="bg-white text-black">
-  <div class="max-w-md mx-auto border border-gray-200">
-    <!-- Image container with top icons -->
-    <div class="relative">
-      <img
-        class="w-full object-cover"
-        height="600"
-        src="tirev2010.jpg"
-        width="300"
-      />
-      <!-- Back arrow circle -->
-      <button
-        aria-label="Back"
-        class="absolute top-4 left-4 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-arrow-left text-white text-lg"></i>
-      </button>
-      <!-- Cart icon circle -->
-      <button
-        aria-label="Cart"
-        class="absolute top-4 right-16 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-shopping-cart text-white text-lg"></i>
-      </button>
-      <!-- More options circle -->
-      <button
-        aria-label="More options"
-        class="absolute top-4 right-4 bg-gray-300 bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
-      >
-        <i class="fas fa-ellipsis-h text-white text-lg"></i>
-      </button>
-    </div>
-    <!-- Product title -->
-    <h1
-      class="px-4 pt-10 pb-4 text-black text-base font-normal leading-5"
-      style="line-height: 1.25rem;"
-    >
+<body class="max-w-md mx-auto border border-gray-200 relative">
+
+  <!-- Gambar Produk -->
+  <div class="relative w-full cursor-pointer" onclick="window.location.href='profiltoko.html'">
+    <img src="./tirev2010.jpg" alt="Foto Produk" class="w-full h-72 object-cover">
+
+    <!-- Tombol Navigasi Atas -->
+    <button onclick="window.location.href='profiltoko.html'" class="absolute top-3 left-3 bg-black bg-opacity-50 w-9 h-9 rounded-full flex items-center justify-center">
+      <i class="fas fa-arrow-left text-white"></i>
+    </button>
+
+    <button onclick="window.location.href='profiltoko.html'" class="absolute top-3 right-16 bg-black bg-opacity-50 w-9 h-9 rounded-full flex items-center justify-center">
+      <i class="fas fa-share text-white"></i>
+    </button>
+
+    <button onclick="window.location.href='profiltoko.html'" class="absolute top-3 right-3 bg-black bg-opacity-50 w-9 h-9 rounded-full flex items-center justify-center">
+      <i class="fas fa-ellipsis-h text-white"></i>
+    </button>
+  </div>
+
+  <!-- Detail Produk -->
+  <div class="p-4 cursor-pointer" onclick="window.location.href='profiltoko.html'">
+    <h1 class="text-gray-900 font-semibold text-lg leading-snug">
       MESIN TIGER REVO 2010 TIREV KELENGKAPAN SET PENGAPIAN KARBU SIAP PAKAI
     </h1>
-    <!-- Delivery info -->
-    <div
-      class="flex items-center justify-between border-t border-b border-gray-200 px-4 py-3"
-    >
-      <div class="flex items-center space-x-2 text-sm text-gray-700">
-        <i class="fas fa-truck text-green-500 text-lg"></i>
-        <div>
-          <p class="font-semibold text-gray-900 leading-5">
-            Garansi tiba: Garansi keamanan sampai tiba
-          </p>
-          <p class="text-gray-400 text-xs leading-4">
-            Dapatkan Voucher s/d Rp10.000 jika pesanan terlambat.
-          </p>
-        </div>
-      </div>
-      <i class="fas fa-chevron-right text-gray-400"></i>
+
+    <div class="flex items-center justify-between mt-3">
+      <span class="shopee-orange font-bold text-2xl">Rp4.300.000</span>
+      <span class="text-gray-500 text-sm">5 Terjual</span>
     </div>
-    <!-- Return & COD info -->
-    <button
-      class="flex items-center justify-between w-full border-b border-gray-200 px-4 py-3 text-sm text-gray-900"
-      type="button"
-    >
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-shield-alt text-red-400 text-lg"></i>
-        <span>Bebas Pengembalian · COD-Cek Dulu</span>
-      </div>
-      <i class="fas fa-chevron-right text-gray-400"></i>
-    </button>
-    <!-- Seller info -->
-    <div class="px-4 py-5">
-      <div class="flex items-center space-x-4">
-        <img
-          alt="Shop profile image showing various motorcycle parts in a workshop"
-          class="w-12 h-12 rounded-full object-cover"
-          height="48"
-          src="https://storage.googleapis.com/a1aa/image/16d644af-0053-4b0b-3657-7f070495c5ab.jpg"
-          width="48"
-        />
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-gray-900 leading-5">AL X Garage Otomotif</p>
-          <p class="text-gray-500 text-xs leading-4 mt-0.5">Aktif 38 menit lalu</p>
-          <p class="text-gray-400 text-xs leading-4 flex items-center mt-0.5">
-            <i class="fas fa-map-marker-alt mr-1"></i>
-          </p>
-        </div>
-        <button
-          onclick="window.location.href='profiltoko.html'"
-          class="text-orange-600 border border-orange-600 rounded px-4 py-1 text-sm font-medium hover:bg-orange-50"
-          type="button"
-        >
-          Kunjungi Toko
-        </button>
-      </div>
-      <div
-        class="flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-gray-600 font-semibold"
-      >
-        <span><span class="text-red-600">39</span> Produk</span>
-        <span><span class="text-red-600">4.8</span> Penilaian</span>
-        <span><span class="text-red-600">97%</span> Chat Dibalas</span>
+
+    <div class="flex items-center mt-2">
+      <i class="fas fa-star text-yellow-400 mr-1"></i>
+      <span class="text-sm font-semibold">4.8</span>
+      <span class="text-gray-500 text-sm ml-1">(74 penilaian)</span>
+    </div>
+  </div>
+
+  <!-- Info Pengiriman -->
+  <div class="border-y border-gray-200 px-4 py-3 cursor-pointer" onclick="window.location.href='profiltoko.html'">
+    <div class="flex items-start space-x-2 text-sm">
+      <i class="fas fa-truck text-green-500 mt-0.5"></i>
+      <div>
+        <p class="font-medium text-gray-800">Garansi tiba: aman sampai tujuan</p>
+        <p class="text-gray-500 text-xs">Dapatkan voucher s/d Rp10.000 jika pesanan terlambat.</p>
       </div>
     </div>
   </div>
+
+  <!-- Bebas Pengembalian -->
+  <div class="border-b border-gray-200 px-4 py-3 flex items-center justify-between text-sm text-gray-800 cursor-pointer" onclick="window.location.href='profiltoko.html'">
+    <div class="flex items-center space-x-2">
+      <i class="fas fa-shield-alt text-red-400"></i>
+      <span>Bebas Pengembalian · Cek Dulu baru bayar lewat ShopeePay</span>
+    </div>
+    <i class="fas fa-chevron-right text-gray-400"></i>
+  </div>
+
+  <!-- Info Toko -->
+  <div class="px-4 py-5 cursor-pointer" onclick="window.location.href='profiltoko.html'">
+    <div class="flex items-center space-x-4">
+      <img
+        src="https://storage.googleapis.com/a1aa/image/16d644af-0053-4b0b-3657-7f070495c5ab.jpg"
+        class="w-12 h-12 rounded-full object-cover"
+        alt="Profil Toko"
+      />
+      <div class="flex-1">
+        <p class="font-semibold text-gray-900">AL X Garage Otomotif</p>
+        <p class="text-xs text-gray-500">Aktif 38 menit lalu</p>
+        <p class="text-xs text-gray-500 flex items-center"><i class="fas fa-map-marker-alt mr-1"></i></p>
+      </div>
+      <button
+        onclick="window.location.href='profiltoko.html'"
+        class="shopee-orange border border-[#EE4D2D] rounded px-3 py-1 text-sm font-medium hover:bg-orange-50"
+      >
+        Kunjungi
+      </button>
+    </div>
+
+    <div class="flex flex-wrap gap-x-4 gap-y-1 mt-4 text-xs text-gray-600">
+      <span><span class="text-[#EE4D2D] font-semibold">39</span> Produk</span>
+      <span><span class="text-[#EE4D2D] font-semibold">4.8</span> Penilaian</span>
+      <span><span class="text-[#EE4D2D] font-semibold">97%</span> Chat Dibalas</span>
+    </div>
+  </div>
+
+  <!-- Tombol bawah -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 max-w-md mx-auto flex">
+    <button onclick="window.location.href='profiltoko.html'" class="w-1/2 py-3 text-teal-600 flex items-center justify-center space-x-2 font-semibold hover:bg-gray-50">
+      <i class="fas fa-comment-dots"></i>
+      <span>Chat</span>
+    </button>
+    <button onclick="window.location.href='profiltoko.html'" class="w-1/2 py-3 bg-[#EE4D2D] text-white font-semibold hover:brightness-90">
+      Beli Sekarang
+    </button>
+  </div>
+
 </body>
 </html>
