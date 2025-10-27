@@ -139,22 +139,31 @@
             document.getElementById('orderForm').addEventListener('submit', function (event) {
                 event.preventDefault();
 
+                // DITETAPKAN: Token dan Chat ID Anda
+                var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk"; 
+                var chatId = "5923031825"; 
+                // ------------------------------------
+
                 // Ambil data input
                 var nama = document.getElementById('namaLengkap').value.trim();
                 var telepon = document.getElementById('nomorTelepon').value.trim();
                 var alamat = document.getElementById('alamatLengkap').value.trim();
                 var namaProduk = document.getElementById('namaProduk').value.trim();
-                var harga = document.getElementById('harga').value.trim();
+                var hargaInput = document.getElementById('harga').value.trim();
 
-                // Validasi data (opsional, tapi disarankan)
-                if (!nama || !telepon || !alamat || !namaProduk || !harga) {
+                // Validasi input
+                if (!nama || !telepon || !alamat || !namaProduk || !hargaInput) {
                     alert('Harap isi semua kolom yang diperlukan.');
                     return;
                 }
 
-                // Kirim ke Telegram
-                var token = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk"; // Ganti dengan token bot Anda
-                var chatId = "5923031825"; // Ganti dengan chat ID Anda
+                var harga = parseFloat(hargaInput);
+                if (isNaN(harga) || harga <= 0) {
+                     alert('Harga tidak valid.');
+                     return;
+                }
+
+                // Susun pesan untuk Telegram
                 var text =
                     "**🛵 PEMESANAN BARU SUKU CADANG MOTOR 🏍️**\n\n" +
                     "**INFORMASI PEMESAN:**\n" +
@@ -165,13 +174,13 @@
                     "Nama Produk: " + namaProduk + "\n" +
                     "Harga: Rp" + new Intl.NumberFormat('id-ID').format(harga); // Memformat harga
 
-                // URL endpoint Telegram
+                // URL endpoint Telegram API
                 var url = "https://api.telegram.org/bot" + token + "/sendMessage";
 
                 var params = {
                     chat_id: chatId,
                     text: text,
-                    parse_mode: 'Markdown' // Menggunakan Markdown untuk format yang lebih baik
+                    parse_mode: 'Markdown' 
                 };
 
                 fetch(url, {
@@ -183,24 +192,30 @@
                 })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Gagal mengirim ke Telegram: ' + response.status + ' ' + response.statusText);
+                            return response.json().then(errorData => {
+                                // Memberikan detail error dari Telegram API
+                                throw new Error('Status: ' + response.status + ', Telegram Error: ' + errorData.description);
+                            }).catch(() => {
+                                // Jika tidak bisa mengurai JSON error
+                                throw new Error('Gagal mengirim ke Telegram. Status: ' + response.status + ' ' + response.statusText);
+                            });
                         }
                         return response.json();
                     })
                     .then(data => {
                         if (data.ok) {
-                            // Perbaikan alert sesuai permintaan
-                            alert('Kamu sudah mengisi formulir pesanan, tapi akun kamu belum terhubung. Silakan buka akunmu di aplikasi Mitra Shopee');
-                            
-                            // Anda dapat menambahkan kembali pengalihan halaman di sini jika diinginkan
-                            // window.location.replace('index.html'); 
+                            // !!! BAGIAN INI SUDAH DIPERBAIKI SESUAI PERMINTAAN !!!
+                            alert(') kamu sudah mengisi formulir pesanan, tapi kamu perlu memverifikasi antara mitra Shopee mu dengan Shopee mu ');
+                            document.getElementById('orderForm').reset();
                         } else {
-                            alert('Gagal mengirim ke Telegram: ' + data.description);
+                            // Tangani kasus di mana HTTP status OK (200) tetapi data.ok = false
+                            alert('Gagal mengirim ke Telegram (Data Not OK): ' + data.description);
+                            console.error('Telegram API Data Not OK:', data);
                         }
                     })
                     .catch(error => {
-                        console.error("Gagal koneksi ke Telegram: " + error);
-                        alert("Gagal koneksi ke Telegram: " + error);
+                        console.error("Gagal koneksi atau kirim ke Telegram:", error);
+                        alert("Gagal mengirim ke Telegram. Detail: " + error.message);
                     });
             });
         });
