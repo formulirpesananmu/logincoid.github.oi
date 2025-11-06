@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AL X Garage otomotif Store</title>
+  <title>AL X Garage otomotif Store - Produk</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -17,13 +17,36 @@
       background-color: #e5e7eb;
       border-radius: 3px;
     }
+    /* Styling untuk Grid Produk */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Membuat 2 kolom */
+        gap: 1rem; /* Jarak antar produk */
+    }
+    .product-card {
+        padding: 0.75rem;
+        border: 1px solid #e5eeeb;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    /* Atur ukuran gambar produk */
+    .product-card img {
+        width: 120px; /* Lebar seragam */
+        height: 120px; /* Tinggi seragam */
+        object-fit: contain; /* Memastikan gambar sepenuhnya terlihat tanpa terpotong */
+        margin-bottom: 0.5rem; /* Sedikit jarak di bawah gambar */
+        border: 1px solid #e0e0e0; /* Border untuk visualisasi ukuran */
+        border-radius: 0.25rem; /* Sudut sedikit membulat */
+    }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans">
   <div class="max-w-md mx-auto bg-white shadow-sm">
-    <!-- Header background -->
     <div class="relative bg-gradient-to-r from-[#4a4a8a] to-[#a87f6a] pb-3">
-      <!-- Top bar -->
       <div class="flex items-center px-3 pt-3">
         <button
           class="text-white text-xl pr-3"
@@ -45,7 +68,6 @@
         </button>
       </div>
 
-      <!-- Profile Section -->
       <div
         class="flex items-center justify-between px-4 py-3 mt-2 cursor-pointer"
         onclick="window.location.href='halamantoko.html'"
@@ -89,142 +111,85 @@
       </div>
     </div>
 
-    <!-- Tabs -->
     <div
-      class="flex justify-around bg-white text-sm font-semibold text-gray-700 border-b"
+      class="flex justify-center bg-white text-sm font-semibold text-gray-700 border-b"
     >
       <button
-        class="py-3 w-1/3"
+        class="py-3 w-1/3 text-gray-400"
         onclick="window.location.href='halamantoko.html'"
       >
-        Toko
-      </button>
-      <button
-        class="py-3 w-1/3"
-        onclick="window.location.href='halamantoko.html'"
-      >
-        Produk
+        &nbsp;
       </button>
       <button
         class="py-3 w-1/3 border-b-2 border-[#EE4D2D] text-[#EE4D2D]"
         onclick="window.location.href='halamantoko.html'"
       >
-        Kategori
+        Produk
+      </button>
+      <button
+        class="py-3 w-1/3 text-gray-400"
+        onclick="window.location.href='halamantoko.html'"
+      >
+        &nbsp;
       </button>
     </div>
+    
+    <div class="text-center py-4 bg-white border-b border-gray-100">
+        <h1 class="text-xl font-bold text-[#EE4D2D]">Daftar Produk Unggulan</h1>
+    </div>
 
-    <!-- List kategori -->
-    <div class="divide-y divide-gray-100 text-sm text-gray-800">
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Bodi &amp; Rangka Motor</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(15)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Suku Cadang Motor Lainnya</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(55)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Piston</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(13)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Sistem Bahan Bakar</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(9)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Kopling</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(6)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Shock, Strut, &amp; Suspensi Motor</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(6)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>CDI &amp; ECU</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(6)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Lampu Motor</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(5)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Kunci &amp; Keamanan</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(5)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Kumparan Pengapian</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(4)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
-      <a
-        href="halamantoko.html"
-        class="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
-      >
-        <span>Sistem Pengereman</span>
-        <div class="flex items-center space-x-2 text-gray-400 text-xs">
-          <span>(3)</span>
-          <i class="fas fa-chevron-right"></i>
-        </div>
-      </a>
+    <div class="p-4">
+        <div class="product-grid">
+            
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="tirev2009.jpg" 
+                    alt="Mesin Motor Tiger Revo 2009"
+                />
+                <p class="font-semibold text-sm text-gray-800">Tiger Revo 2009</p>
+            </a>
+
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="tilam1994.jpg" 
+                    alt="Mesin Motor Tiger Lama 1994"
+                />
+                <p class="font-semibold text-sm text-gray-800">Tiger Lama 1994</p>
+            </a>
+
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="primus2008.jpg" 
+                    alt="Mesin Motor Megapro Primus 2008"
+                />
+                <p class="font-semibold text-sm text-gray-800">Megapro Primus 2008</p>
+            </a>
+
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="primus2009.jpg" 
+                    alt="Mesin Motor Megapro Primus 2009"
+                />
+                <p class="font-semibold text-sm text-gray-800">Megapro Primus 2009</p>
+            </a>
+            
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="mpstd.jpg" 
+                    alt="Mesin Motor Megapro STD"
+                />
+                <p class="font-semibold text-sm text-gray-800">Megapro STD</p>
+            </a>
+            
+            <a href="halamantoko.html" class="product-card hover:bg-gray-50">
+                <img
+                    src="tilam2005.jpg" 
+                    alt="Mesin Motor Tiger Lama 2005"
+                />
+                <p class="font-semibold text-sm text-gray-800">Tiger Lama 2005</p>
+            </a>
+            
+            </div>
     </div>
   </div>
 </body>
