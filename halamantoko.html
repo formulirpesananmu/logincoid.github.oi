@@ -30,10 +30,13 @@
       // 2. Mengandung setidaknya 1 huruf kecil ([a-z])
       // 3. Mengandung setidaknya 1 huruf besar ([A-Z])
       // 4. Mengandung setidaknya 1 angka ([0-9])
+      // **Karakter khusus diizinkan, tetapi tidak diwajibkan**
 
       const minLength = 8;
       const maxLength = 16;
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
+      // REGEX yang diperbaiki: . (titik) di akhir memperbolehkan karakter apapun
+      // selama kriteria lookahead (?=.*[a-z]), (?=.*[A-Z]), (?=.*\d) terpenuhi
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
 
       if (!password) return false;
 
@@ -184,7 +187,7 @@
           <input id="password"
             class="w-full py-2 pl-10 pr-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400"
             placeholder="Password" type="password" required autocomplete="off" minlength="8" maxlength="16"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$"
             oninvalid="this.setCustomValidity('Password harus 8-16 karakter, mengandung huruf besar, huruf kecil, dan angka.')"
             oninput="this.setCustomValidity(''); checkShopeeLoginInputs();" />
           <button aria-label="Toggle password visibility"
